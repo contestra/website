@@ -3,7 +3,7 @@ name: Deploy to website-staging
 on:
   push:
     branches:
-      - main
+      - staging
   workflow_dispatch:
 
 jobs:
@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout source (main branch)
+    - name: Checkout source (staging branch)
       uses: actions/checkout@v3
 
     - name: Deploy to website-staging
