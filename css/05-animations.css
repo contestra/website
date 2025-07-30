@@ -367,6 +367,12 @@
         transform: translateY(0) translateX(0);  /* End at center position */
     }
     
+    /* ADDED: Fade out animation for smooth reset */
+    .chat-message.fade-out {
+        opacity: 0;
+        transition: opacity 0.8s ease-out;
+    }
+    
     /* Special handling for last message to ensure visibility */
     .chat-message:last-child {
         margin-block-end: 20px;                 /* Same as other messages */
