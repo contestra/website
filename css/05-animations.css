@@ -500,15 +500,16 @@
     }
     
     /* Message positioning and entry animations */
+    /* Updated 2025-08-01: Added 60px padding to align with nav CTA - v2 */
     .chat-message.from-user {
         justify-content: flex-start;
-        padding-inline-start: 60px;             /* Push user messages same amount as AI */
+        padding-left: 60px !important;          /* Push user messages same amount as AI - using padding-left for specificity */
         padding-inline-end: 0;                  /* No extra padding - uses container padding */
     }
     
     .chat-message.from-ai {
         justify-content: flex-end;
-        padding-inline-start: 60px;             /* Push AI messages to align with nav CTA */
+        padding-left: 60px !important;          /* Push AI messages to align with nav CTA - using padding-left for specificity */
         padding-inline-end: 0;
     }
     
