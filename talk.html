@@ -148,7 +148,7 @@
             
             /* Gradient background */
             background: 
-                /* Top half: smooth gradient with pastel colors (mixed with white) */
+                /* Main smooth gradient - fills most of the space */
                 linear-gradient(to right, 
                     #bfffff 0%,      /* Pastel cyan - was #7fffff */
                     #bfffe1 16.66%,  /* Pastel turquoise - was #7fffc3 */
@@ -157,9 +157,9 @@
                     #ffe1bf 66.66%,  /* Pastel orange - was #ffc37f */
                     #ffbfe1 83.33%,  /* Pastel pink - was #ff7fc3 */
                     #ffbfd0 100%     /* Pastel rose - was #ff7fa1 */
-                ) 0 0 / 100% 50% no-repeat,
+                ) 0 0 / 100% calc(100% - 200px) no-repeat,
                 
-                /* Bottom half: 7 equal color bars */
+                /* Bottom bars: 7 equal color bars fixed at bottom */
                 linear-gradient(to right,
                     #00ffff 0% 14.3%,
                     #00ff88 14.3% 28.6%,
@@ -168,7 +168,7 @@
                     #ff8800 57.2% 71.5%,
                     #ff0088 71.5% 85.8%,
                     #ff0044 85.8% 100%
-                ) 0 50% / 100% 50% no-repeat;
+                ) 0 100% / 100% 200px no-repeat;
         }
         
         /* Adjust positioning for larger screens */
