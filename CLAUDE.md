@@ -179,6 +179,12 @@ If message text changes and causes clipping:
 
 Remember: The solution is about proper flexbox layout with `justify-content: flex-end`, not about adding massive padding.
 
+### Device Frame Removal - Alignment Adjustment
+When the device frame is removed:
+- The chat messages container has `padding: 20px 40px 20px 20px` (increased right padding)
+- This aligns the AI chat bubbles with the nav CTA gutter position
+- Without the frame's 20px padding, we need extra right padding to maintain visual alignment
+
 ## Device Frame Removal Test (2025-08-01)
 
 ### What Was Changed
