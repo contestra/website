@@ -504,6 +504,12 @@
             transition: opacity 0.3s ease-out;
         }
         
+        /* Override ANY hover effects on gradient for mobile */
+        .b-section[data-id="scale-ai"] .b-link:not(.flipped):hover::before {
+            transform: translateX(0) !important;
+            opacity: 1 !important;
+        }
+        
         /* Hide gradient on flipped cards */
         .b-section[data-id="scale-ai"] .b-link.flipped::before {
             opacity: 0 !important;
@@ -538,9 +544,9 @@
             z-index: 1 !important;
         }
         
-        /* Ensure hover gradient strip stays hidden on mobile */
-        .b-section[data-id="scale-ai"] .b-link:hover::before {
-            transform: translateX(-100%) !important;
+        /* Ensure gradient stays in correct state on hover */
+        .b-section[data-id="scale-ai"] .b-link.flipped:hover::before {
+            opacity: 0 !important; /* Keep hidden when flipped */
         }
         
         /* Ensure back face text is left aligned on mobile */
