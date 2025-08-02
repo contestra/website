@@ -4,7 +4,7 @@ config.php
 .env.local
 
 # Stripe PHP SDK (if you want to exclude it from git)
-# stripe-php/
+stripe-php/
 
 # OS files
 .DS_Store
