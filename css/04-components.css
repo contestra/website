@@ -525,6 +525,11 @@
             text-align: left;
         }
         
+        /* Make H3 titles heavier on mobile */
+        .b-section[data-id="scale-ai"] .card__title {
+            font-weight: 700;
+        }
+        
         /* Disable ALL hover effects on mobile */
         .b-section[data-id="scale-ai"] .b-link:hover {
             background: var(--color-gray-100) !important; /* Stay gray */
