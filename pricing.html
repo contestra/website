@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - Contestra</title>
+    
+    <!-- Font Preloads for Performance -->
+    <link rel="preload" href="fonts/SuisseScreen-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/SuisseScreen-Medium.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/SuisseIntl-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/SuisseIntl-Medium.woff2" as="font" type="font/woff2" crossorigin>
+    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="main.css">
+    
+    <!-- Pricing Page Specific Styles -->
+    <link rel="stylesheet" href="css/06-pricing.css">
+</head>
+<body>
+    <!-- ===== SITE HEADER ===== -->
+    <header id="site-header" class="">
+        <div class="header-bg"></div>
+        <div class="container">
+            <div class="header__in">
+                <nav class="main-navigation">
+                    <a href="index.html" aria-label="Contestra homepage" class="site-logo">
+                        <img src="images/logos/contestra-logo.svg" alt="Contestra">
+                    </a>
+                    <div class="main-menu-wrap">
+                        <ul class="main-menu" id="main-menu">
+                            <li><a href="pricing.html">Pricing</a></li>
+                        </ul>
+                    </div>
+                    <div class="header__options">
+                        <a href="talk.html" class="btn btn--primary-black btn-arrow">
+                            Let's Talk
+                            <svg class="btn-arrow-icon" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                                <polyline points="3 3 9 6 3 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+                    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Dropdown - Full menu with CTA and socials -->
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-menu-inner">
+            <!-- Menu Content -->
+            <div class="mobile-menu-content">
+                <!-- Navigation Section -->
+                <div class="mobile-menu-section">
+                    <h3 class="mobile-menu-section-title">Explore</h3>
+                    <ul class="mobile-menu-nav">
+                        <li>
+                            <a href="pricing.html">
+                                <span>Pricing</span>
+                                <svg viewBox="0 0 20 20" fill="none">
+                                    <path d="M10 7l5 5-5 5" stroke="currentColor"/>
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- CTA Section -->
+                <div class="mobile-menu-cta-section">
+                    <h2 class="mobile-menu-cta-title">Ready to control your brand's AI presence?</h2>
+                    <p class="mobile-menu-cta-subtitle">Schedule a personalized demo to see Contestra in action.</p>
+                    <a href="talk.html" class="btn btn--primary-black btn-arrow">
+                        Consult an AI Expert
+                        <svg class="btn-arrow-icon" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                            <polyline points="3 3 9 6 3 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"></polyline>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Menu Footer -->
+            <div class="mobile-menu-footer">
+                <div class="mobile-menu-socials">
+                    <a href="https://x.com/contestra_ai" target="_blank" rel="noopener">
+                        <img src="images/icons/x-logo-black.svg" alt="X (Twitter)">
+                    </a>
+                    <a href="https://www.linkedin.com/company/contestra/" target="_blank" rel="noopener">
+                        <img src="images/icons/linkedin-logo-black.svg" alt="LinkedIn">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PRICING CONTENT ===== -->
+    <div class="pricing-wrapper">
+        <div class="pricing-container">
+            <!-- Header -->
+            <div class="pricing-header">
+                <h1 class="pricing-title">Choose your brand visibility tier</h1>
+                <p class="pricing-subtitle">Strategic AI brand positioning for companies of all sizes</p>
+            </div>
+
+            <!-- Toggle -->
+            <div class="toggle-section" id="toggle-section">
+                <div class="toggle-controls">
+                    <span class="toggle-label" id="monthly-label">Monthly</span>
+                    <div class="toggle-container" id="toggle-container">
+                        <button class="toggle-switch" 
+                                id="billing-toggle"
+                                role="switch"
+                                aria-checked="false"
+                                aria-label="Toggle between monthly and annual billing"
+                                aria-describedby="annual-label savings-tag">
+                            <span class="toggle-knob"></span>
+                            <span class="sr-only">Currently showing monthly prices</span>
+                        </button>
+                    </div>
+                    <span class="toggle-label" id="annual-label">Annual</span>
+                    <span class="savings-tag">Save 20%</span>
+                </div>
+            </div>
+
+            <!-- Pricing Cards -->
+            <div class="pricing-grid">
+                <!-- Essential Plan -->
+                <div class="pricing-card">
+                    <h3 class="plan-name">Essential</h3>
+                    <p class="plan-description">For small teams wanting to establish and control their AI presence</p>
+                    
+                    <div class="price-display">
+                        <div class="monthly-price">
+                            <div class="price-amount">
+                                <span class="price-currency">$</span>
+                                <span class="price-number">4,990</span>
+                                <span class="price-period">monthly</span>
+                            </div>
+                        </div>
+                        <div class="annual-price">
+                            <div class="price-amount">
+                                <span class="price-currency">$</span>
+                                <span class="price-number">3,992</span>
+                                <span class="price-period">monthly</span>
+                            </div>
+                            <div class="price-detail">$47,904 billed annually</div>
+                        </div>
+                    </div>
+                    
+                    <a href="talk.html" class="cta-button">Subscribe</a>
+                    
+                    <ul class="features-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span class="feature-text">Brand token vector space analysis</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span class="feature-text">Brand association vector proximity analysis</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span class="feature-text">Strategic content planning for embeddings</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span class="feature-text">Content architecture vector space optimization</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span class="feature-text">1 Strategic brand micro app</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span class="feature-text">JSON-LD structured data lifecycle management</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span class="feature-text">External structured data source management</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span class="feature-text">LLM-friendly content rewrites</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span class="feature-text">LLM crawl optimization & monitoring</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span class="feature-text">2 hours of consulting (Zoom)</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Business Plan -->
+                <div class="pricing-card popular">
+                    <h3 class="plan-name">Business</h3>
+                    <p class="plan-description">For growing companies with multiple products</p>
+                    
+                    <div class="price-display">
+                        <div class="monthly-price">
+                            <div class="price-amount">
+                                <span class="price-currency">$</span>
+                                <span class="price-number">7,990</span>
+                                <span class="price-period">monthly</span>
+                            </div>
+                        </div>
+                        <div class="annual-price">
+                            <div class="price-amount">
+                                <span class="price-currency">$</span>
+                                <span class="price-number">6,392</span>
+                                <span class="price-period">monthly</span>
+                            </div>
+                            <div class="price-detail">$76,704 billed annually</div>
+                        </div>
+                    </div>
+                    
+                    <a href="talk.html" class="cta-button">Subscribe</a>
+                    
+                    <ul class="features-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span class="feature-text">Everything in Essential</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span class="feature-text">2 Strategic brand micro apps</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span class="feature-text">Support for multiple SKUs</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span class="feature-text">Content structured for voice interfaces</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span class="feature-text">4 hours of consulting (Zoom)</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Enterprise Plan -->
+                <div class="pricing-card enterprise">
+                    <h3 class="plan-name">Enterprise</h3>
+                    <p class="plan-description">For large organizations with mission-critical AI presence needs</p>
+                    
+                    <div class="price-display">
+                        <div class="monthly-price">
+                            <div class="price-amount">
+                                <span class="price-currency">$</span>
+                                <span class="price-number">19,990</span>
+                                <span class="price-period">monthly</span>
+                            </div>
+                        </div>
+                        <div class="annual-price">
+                            <div class="price-amount">
+                                <span class="price-currency">$</span>
+                                <span class="price-number">15,992</span>
+                                <span class="price-period">monthly</span>
+                            </div>
+                            <div class="price-detail">$191,904 billed annually</div>
+                        </div>
+                    </div>
+                    
+                    <a href="talk.html" class="cta-button">Subscribe</a>
+                    
+                    <ul class="features-list">
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span class="feature-text">Everything in Business</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span class="feature-text">4 Strategic brand micro apps</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span class="feature-text">Unlimited SKUs</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span class="feature-text">Conversion of documentation for LLMs</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span class="feature-text">Agentic browser optimizations</span>
+                        </li>
+                        <li class="feature-item">
+                            <span class="feature-icon">
+                                <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.5 4.5L6 12L2.5 8.5" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span class="feature-text">Unlimited support</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FAQ SECTION ===== -->
+    <section class="faq-section">
+        <div class="faq-container">
+            <div class="faq-header">
+                <h2 class="faq-title">Frequently asked questions</h2>
+            </div>
+            
+            <div class="faq-list">
+                <div class="faq-item">
+                    <h3 class="faq-question">What exactly do you mean by "AI presence"?</h3>
+                    <div class="faq-answer">Your AI presence is how large language models like ChatGPT, Gemini, Perplexity and Claude understand and represent your brand when users ask about your company or industry. We optimize your content, website structure, and external data sources so these models position your brand favorably in their responses. We continuously monitor your brand mentions across all major AI platforms to track how our optimizations are performing and make adjustments as needed.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">How does our methodology work?</h3>
+                    <div class="faq-answer">We start by capturing an "unprimed" snapshot of how your brand exists in the embedding space of frontier AI models—not through chat interfaces, but by directly analyzing the mathematical representations these models use to understand concepts and relationships. Using neutral probes like "Which brands do you associate with longevity supplements?" and "What concepts arise when you hear 'epigenetic clock'?" we then flip the analysis: "What do you associate with [your brand]?" This bi-directional approach reveals unbiased, native perceptions at the foundational embedding level.
+                    
+                    <br><br>A key component is our BEEB (Bi-directional Entity-Brand) method, which builds a semantic network where nodes are entities and edges represent weighted relationships. Entities—such as products like NMN boosters, concepts like "healthspan extension," or competitors—are extracted from LLM responses using spaCy's named entity recognition pipelines for efficient processing. Constestra then generates embeddings via Gemma models (fine-tuned on TensorFlow or PyTorch frameworks) to calculate cosine similarity, measuring how closely a brand aligns with desired entities in vector space. Basic NLP tasks like tokenization and preprocessing are handled with NLTK for streamlined workflows, ensuring models run smoothly on PyTorch for custom adaptations.
+                    
+                    <br><br>This creates a dynamic semantic network where high similarity scores (0.83 between your brand and "mitochondrial health") reveal strong associations to leverage, while low scores (0.11 for "senotherapy") expose gaps to fill through targeted content and optimization. For instance, if a wellness brand scores low on proximity to "spermidine for autophagy," we recommend targeted content creation or optimizations to close that gap, strengthening associations over time and boosting visibility in queries about anti-aging protocols.
+                    
+                    <br><br>We continuously re-run this analysis to track how your semantic positioning shifts over time in the embedding space—did that peer-reviewed study on cellular energy pull you closer to the "longevity science" cluster? Has a competitor begun encroaching on your territory? Unlike tools that chase lagging citations from grounded searches, we attack foundational semantics, aiming for native LLM recognition that persists across model updates. Most importantly, we correlate these vector space changes with concrete actions—publishing research, optimizing schema markup, securing citations—giving you data-backed proof that each marketing investment is literally rewiring how AI models understand your brand at the foundational level. This results in measurable outcomes, such as 300-7,000% boosts in LLM citation rates for clients in wellness sectors, by aligning content with how AI systems process and retrieve information on topics like resveratrol benefits or epigenetic aging, ultimately driving long-term growth in both ungrounded and grounded responses.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">What's included in the "strategic brand micro apps"?</h3>
+                    <div class="faq-answer">These are custom interactive web applications designed to increase engagement on your website while reinforcing your brand positioning in ways that influence how LLMs perceive your company. Examples may include biological age calculators, assessment tools, inflammation scoring, bloodwork analysis, or interactive guides relevant to your industry.
+                    
+                    <br><br>Importantly, these apps force click-throughs to your website because LLMs can't remix or reproduce interactive content - users must visit your site to use the tools, driving direct traffic and engagement. These interactive elements can also be structured to appear in Google's rich results, giving you enhanced visibility in search results and establishing your brand as the authoritative source for specialized tools in your field.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">Can I change tier anytime?</h3>
+                    <div class="faq-answer">Yes, you can change your subscription tier at any time. Upgrades take effect immediately, while downgrades take effect at your next billing cycle. All work completed during your subscription remains yours, and we'll help ensure a smooth transition between service levels.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">Do you work with companies that don't have existing structured data presence?</h3>
+                    <div class="faq-answer">Absolutely. Many of our clients start with minimal structured data presence. We create everything from scratch - implementing JSON-LD markup on your site, establishing Wikipedia pages, creating Wikidata entities, and building your complete AI-optimized content architecture.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">How quickly will I see results?</h3>
+                    <div class="faq-answer">Most clients see initial improvements in AI visibility within 2-4 weeks. Initial optimizations typically begin showing results within 4-6 weeks as search engines and AI models index your updated content and structured data. Significant gains in AI preference and recommendation rates typically occur within 60-90 days of implementing our strategies. However, AI presence optimization is ongoing work - we continuously refine and improve your positioning as the AI landscape evolves and new models are released.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">What is "brand token vector space analysis"?</h3>
+                    <div class="faq-answer">This is how we analyze exactly how AI models "see" your brand name. Every word and brand name exists as a mathematical point in AI models' internal knowledge space. We map where your brand sits in this space and identify whether it's positioned near competitors, complementary businesses, or entirely different concepts. For example, we might discover your longevity brand is positioned closer to "supplements" than "medical research," telling us how AI models fundamentally understand your brand.
+                    
+                    <br><br>We've found that most clients have a weak brand entity in embedding space, significantly lowering their overall chance of being mentioned across the entire AI answer surface space. In fact, many brands don't even have a brand entity existing in major frontier models, while others have ambiguated brands that get confused with similarly named companies or concepts. This leads to confabulations (a subtype of hallucination) where AI models make up incorrect information about your brand or mix you up with competitors, directly harming your AI presence and potential customer discovery.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">What does "brand association vector proximity analysis" reveal?</h3>
+                    <div class="faq-answer">We identify the 10-15 words and concepts that AI models most strongly associate with your brand name. Think of this as the AI answer equivalent of Google's top 10-15 search results - these are the concepts most likely to appear when someone asks AI about your brand or your industry. For example, if you're a longevity company, we might discover that AI models associate you more with "innovation" than "healthspan extension," or that you're linked to "mobile health apps" rather than "health and wellness." This analysis reveals gaps between how you want to be perceived and how AI actually sees you, and shows us exactly which associations we need to strengthen or weaken to improve your AI visibility and positioning.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">What is "content architecture vector space optimization"?</h3>
+                    <div class="faq-answer">We redesign how your website's pages connect to each other - your navigation structure and internal linking - to reinforce the brand associations you want AI models to learn. For example, strategically linking your longevity research pages to cellular biology content and peer-reviewed studies, rather than to general wellness articles, teaches AI models that your brand belongs in the scientific research space.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">What are "LLM-friendly content rewrites"?</h3>
+                    <div class="faq-answer">We make minimal but strategically impactful changes to your existing content to make it more digestible for AI models and increase the likelihood that your content gets quoted when users ask AI questions related to your expertise. This involves restructuring sentences and paragraphs to match how LLMs process and prioritize information - for example, leading with key facts, using clearer logical flow, and structuring complex information in ways that AI models can easily parse and reference. The changes don't harm readability for human visitors; in fact, they typically improve clarity and comprehension for both humans and AI. Your content becomes more quotable, more authoritative in AI responses, and often more engaging for your website visitors.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">What is "LLM crawl optimization & monitoring"?</h3>
+                    <div class="faq-answer">We optimize how AI crawlers access your website and monitor their activity to ensure maximum visibility. Most websites have technical configurations designed for traditional search engines that are too restrictive for AI models. For example, it's very common for websites to have robots.txt files that block AI crawlers from accessing research pages and policy information because they only have generic rules that are very restrictive.
+                    
+                    <br><br>Frontier LLMs operate differently than traditional search engines - they're not trying to rank individual pages, they're trying to build comprehensive understanding of your brand and expertise. We optimize multiple technical elements including robots.txt files, crawl directives, site structure signals, and content accessibility to ensure AI crawlers can properly index your most important content. This includes giving major AI crawlers appropriate access to policy pages, research sections, and other content that traditional SEO might block. We also check for technical barriers like JavaScript-only content, authentication walls, and crawl budget limitations that could prevent AI models from fully understanding your expertise.</div>
+                </div>
+                
+                <div class="faq-item">
+                    <h3 class="faq-question">Does this help with SEO?</h3>
+                    <div class="faq-answer">Absolutely, and the connection is becoming stronger every day. Google has launched AI Mode, a new experimental feature in Search that uses custom versions of Gemini 2.5 and represents Google's vision for what the future of search will look like. AI Mode uses a "query fan-out" technique, breaking down questions into subtopics and issuing multiple searches simultaneously, enabling Search to dive deeper into the web and discover more hyper-relevant content.
+                    
+                    <br><br>The work we do creates compounding SEO benefits: stronger brand entity recognition improves your chances of appearing in AI Overviews and AI Mode responses; better semantic associations help Google's AI systems understand your topical authority; optimized content architecture improves how Google's models navigate and understand your site hierarchy; and LLM-friendly content rewrites make your pages more likely to be surfaced by these advanced AI search features. As Google continues graduating many AI Mode features into the core Search experience, businesses optimized for AI presence will have a significant competitive advantage in traditional search results.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="container">
+            <p class="footer-copyright">© 2025 Contestra. All Rights Reserved.</p>
+
+            <div class="footer-system-status">
+                <span class="status-indicator"></span><span class="status-text">All systems normal</span>
+            </div>
+
+            <div class="footer-socials">
+                <a href="https://x.com/contestra_ai" target="_blank" rel="noopener"><img src="images/icons/x-logo-black.svg" alt="X (Twitter)"></a>
+                <a href="https://www.linkedin.com/company/contestra/" target="_blank" rel="noopener"><img src="images/icons/linkedin-logo-black.svg" alt="LinkedIn"></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script src="js/utilities.js"></script>
+    <script src="js/navigation.js"></script>
+    <script>
+        // Annual/Monthly toggle functionality
+        const toggleSwitch = document.getElementById('billing-toggle');
+        const toggleSection = document.getElementById('toggle-section');
+        const monthlyLabel = document.getElementById('monthly-label');
+        const annualLabel = document.getElementById('annual-label');
+        const pricingCards = document.querySelectorAll('.pricing-card');
+        const srText = toggleSwitch.querySelector('.sr-only');
+
+        // Set initial state (monthly active)
+        monthlyLabel.classList.add('active');
+
+        function toggleBilling(showAnnual) {
+            if (showAnnual) {
+                // Show annual
+                toggleSwitch.classList.add('active');
+                toggleSwitch.setAttribute('aria-checked', 'true');
+                srText.textContent = 'Currently showing annual prices';
+                toggleSection.classList.add('show-annual');
+                annualLabel.classList.add('active');
+                monthlyLabel.classList.remove('active');
+                pricingCards.forEach(card => card.classList.add('show-annual'));
+            } else {
+                // Show monthly
+                toggleSwitch.classList.remove('active');
+                toggleSwitch.setAttribute('aria-checked', 'false');
+                srText.textContent = 'Currently showing monthly prices';
+                toggleSection.classList.remove('show-annual');
+                annualLabel.classList.remove('active');
+                monthlyLabel.classList.add('active');
+                pricingCards.forEach(card => card.classList.remove('show-annual'));
+            }
+        }
+
+        // Handle click events
+        toggleSwitch.addEventListener('click', function() {
+            const isAnnual = !this.classList.contains('active');
+            toggleBilling(isAnnual);
+        });
+
+        // Handle keyboard events (Space and Enter)
+        toggleSwitch.addEventListener('keydown', function(e) {
+            if (e.key === ' ' || e.key === 'Enter') {
+                e.preventDefault();
+                const isAnnual = !this.classList.contains('active');
+                toggleBilling(isAnnual);
+            }
+        });
+    </script>
+
+    <!-- Stripe Integration -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        // Initialize Stripe with your publishable key
+        const stripe = Stripe('uemm-ptbv-lisa-lkhr-fnnv'); // TODO: Replace with your actual publishable key
+        
+        // Stripe price IDs (you'll get these from your Stripe dashboard)
+        const stripePrices = {
+            essential: {
+                monthly: 'price_1Rrk11LAGMDUPM90Xjxj0lG8', // TODO: Replace with actual price ID
+                annual: 'price_1Rrk11LAGMDUPM90zJs8tyyT'     // TODO: Replace with actual price ID
+            },
+            business: {
+                monthly: 'price_1Rrk2wLAGMDUPM90GtFCrZmo',   // TODO: Replace with actual price ID
+                annual: 'price_1Rrk4pLAGMDUPM90vlpElHaO'      // TODO: Replace with actual price ID
+            },
+            enterprise: {
+                monthly: 'price_1Rrk6hLAGMDUPM90gPrIr2qt', // TODO: Replace with actual price ID
+                annual: 'price_1Rrk8ALAGMDUPM90E76UynRk'    // TODO: Replace with actual price ID
+            }
+        };
+        
+        // Add click handlers to all CTA buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get all pricing cards
+            const pricingCards = document.querySelectorAll('.pricing-card');
+            
+            pricingCards.forEach((card, index) => {
+                const ctaButton = card.querySelector('.cta-button');
+                if (ctaButton) {
+                    // Determine which plan this is
+                    let planType = '';
+                    if (index === 0) planType = 'essential';
+                    else if (index === 1) planType = 'business';
+                    else if (index === 2) planType = 'enterprise';
+                    
+                    // Update button to handle click
+                    ctaButton.addEventListener('click', async function(e) {
+                        e.preventDefault();
+                        
+                        // Check if annual billing is selected
+                        const isAnnual = document.getElementById('toggle-section').classList.contains('show-annual');
+                        const billingPeriod = isAnnual ? 'annual' : 'monthly';
+                        
+                        // Get the appropriate price ID
+                        const priceId = stripePrices[planType][billingPeriod];
+                        
+                        try {
+                            // Show loading state
+                            const originalText = this.textContent;
+                            this.textContent = 'Loading...';
+                            this.disabled = true;
+                            
+                            // Check environment and set API endpoint
+                            const isGitHubPages = window.location.hostname.includes('github.io');
+                            const isProduction = window.location.hostname === 'contestra.com' || window.location.hostname === 'www.contestra.com';
+                            
+                            if (isGitHubPages) {
+                                // For development/testing on GitHub Pages
+                                alert(`Demo Mode: Would subscribe to ${planType} plan (${billingPeriod})\n\nPrice ID: ${priceId}\n\nThis will work with full Stripe checkout when deployed to your server.`);
+                                this.textContent = originalText;
+                                this.disabled = false;
+                                return;
+                            }
+                            
+                            // Set API endpoint based on environment
+                            const apiEndpoint = isProduction 
+                                ? 'https://api.contestra.com/create-checkout-session.php'
+                                : '/create-checkout-session.php'; // For local testing
+                            
+                            // Create checkout session via API
+                            const response = await fetch(apiEndpoint, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                    priceId: priceId,
+                                    mode: 'subscription'
+                                })
+                            });
+                            
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            
+                            const { sessionId } = await response.json();
+                            
+                            // Redirect to Stripe Checkout
+                            const { error } = await stripe.redirectToCheckout({ sessionId });
+                            
+                            if (error) {
+                                console.error('Stripe error:', error);
+                                alert('Something went wrong. Please try again.');
+                            }
+                        } catch (error) {
+                            console.error('Error:', error);
+                            alert('Unable to process payment. Please try again later.');
+                        } finally {
+                            // Restore button state
+                            this.textContent = originalText;
+                            this.disabled = false;
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+    
+    <!-- FAQ Accordion Script with Keyboard Navigation -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                // Add keyboard support
+                question.setAttribute('tabindex', '0');
+                question.setAttribute('role', 'button');
+                question.setAttribute('aria-expanded', 'false');
+                question.setAttribute('aria-controls', 'faq-answer-' + Array.from(faqItems).indexOf(item));
+                
+                // Add ID to answer for ARIA
+                const answer = item.querySelector('.faq-answer');
+                answer.setAttribute('id', 'faq-answer-' + Array.from(faqItems).indexOf(item));
+                
+                question.addEventListener('click', function() {
+                    toggleFAQ(item, faqItems);
+                });
+                
+                question.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        toggleFAQ(item, faqItems);
+                    }
+                    // Arrow key navigation
+                    else if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        const nextItem = item.nextElementSibling;
+                        if (nextItem && nextItem.classList.contains('faq-item')) {
+                            nextItem.querySelector('.faq-question').focus();
+                        }
+                    }
+                    else if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        const prevItem = item.previousElementSibling;
+                        if (prevItem && prevItem.classList.contains('faq-item')) {
+                            prevItem.querySelector('.faq-question').focus();
+                        }
+                    }
+                });
+            });
+            
+            function toggleFAQ(item, allItems) {
+                const question = item.querySelector('.faq-question');
+                const isActive = item.classList.contains('active');
+                
+                // Close all other items
+                allItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                        otherItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+                    }
+                });
+                
+                // Toggle current item
+                if (isActive) {
+                    item.classList.remove('active');
+                    question.setAttribute('aria-expanded', 'false');
+                } else {
+                    item.classList.add('active');
+                    question.setAttribute('aria-expanded', 'true');
+                    
+                    // Scroll to position the expanded FAQ in view
+                    // Wait for CSS transition to start
+                    setTimeout(() => {
+                        const rect = item.getBoundingClientRect();
+                        const headerHeight = document.querySelector('#site-header').offsetHeight || 80;
+                        const scrollOffset = 20; // Additional padding
+                        
+                        // Check if FAQ is above viewport or would benefit from repositioning
+                        if (rect.top < headerHeight + scrollOffset) {
+                            // Scroll to put FAQ question at comfortable reading position
+                            const targetScroll = window.scrollY + rect.top - headerHeight - scrollOffset;
+                            window.scrollTo({
+                                top: targetScroll,
+                                behavior: 'smooth'
+                            });
+                        }
+                        // Also check if answer extends below viewport
+                        else if (rect.bottom > window.innerHeight - 100) {
+                            // Scroll to show as much of the answer as possible
+                            const targetScroll = window.scrollY + rect.top - headerHeight - scrollOffset;
+                            window.scrollTo({
+                                top: targetScroll,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }, 50); // Small delay to let CSS transition begin
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -156,7 +156,8 @@
         --spring-easing: cubic-bezier(0.68, -0.55, 0.265, 1.55);
         --smooth-easing: cubic-bezier(0.4, 0, 0.2, 1);
         --bounce-easing: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        /* ENHANCED2: Elastic easing for message pop */
+        /* RESTORED: Elastic easing for more dynamic animations */
+        /* To revert: Change back to cubic-bezier(0.4, 0, 0.2, 1) */
         --elastic-easing: cubic-bezier(0.68, -0.6, 0.32, 1.6);
         
         /* Typing indicator */
@@ -177,95 +178,120 @@
         --glass-reflection-opacity: 0.1;
     }
     
+    /* Remove any styling from parent elements */
+    .hero-animation {
+        background: transparent !important;
+    }
+
     /* ENHANCED: Chatbot container with professional glass morphism */
     .chatbot-container {
         position: relative;
         inline-size: 100%;
         block-size: 100%;
-        padding: clamp(2rem, 4vw, 3rem);
+        padding: 0; /* Remove default padding */
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        background: linear-gradient(
-            135deg,
-            rgba(255, 252, 249, 0.3) 0%,       /* Warm cream with transparency */
-            rgba(255, 255, 249, 0.3) 25%,      /* Light yellow with transparency */
-            rgba(255, 249, 242, 0.3) 50%,      /* Warm peach with transparency */
-            rgba(255, 242, 249, 0.3) 75%,      /* Warm pink with transparency */
-            rgba(255, 252, 249, 0.3) 100%      /* Loop back to cream */
-        );
-        background-size: 200% 200%;
-        background-position: 0% 0%;
-        border: 1px solid rgba(255,255,255,0.3);  /* ENHANCED: Lighter border */
-        /* ENHANCED: Multi-layered shadow for depth */
-        box-shadow: 
-            0 2px 4px rgba(0, 0, 0, 0.02),      /* Subtle close shadow */
-            0 8px 16px rgba(0, 0, 0, 0.04),     /* Mid shadow */
-            0 24px 48px rgba(0, 0, 0, 0.06),    /* Soft ambient shadow */
-            inset 0 0 0 1px rgba(255,255,255,0.5), /* Inner light edge */
-            inset 0 -1px 2px rgba(0,0,0,0.02);  /* Subtle inner shadow at bottom */
-        overflow: hidden;
-        border-radius: 24px;
-        /* Removed gradient animation to prevent wobbling */
+        background: transparent; /* Move gradient to inner div */
+        border: none;
+        box-shadow: none;
+        overflow: hidden; /* Must be hidden to clip to rounded corners */
+        border-radius: 24px; /* Match outer radius initially */
         max-block-size: 100%;
-        min-block-size: 100%;                   /* FIXED: Set min-height to 100% to prevent container from expanding */
-        scrollbar-width: none;                  /* Firefox - hide scrollbar */
-        -ms-overflow-style: none;               /* IE and Edge - hide scrollbar */
-        /* ENHANCED: Better glass effect */
-        backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
-        -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturation));
-        transform: translateZ(0);               /* Force GPU acceleration */
-        will-change: transform, box-shadow;
+        min-block-size: 100%;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
     }
     
-    /* ENHANCED: Noise texture overlay for realistic glass */
-    .chatbot-container::after {
+    /* Create gradient background - only when NOT device frame */
+    .chatbot-container:not(.device-frame)::after {
         content: '';
         position: absolute;
         inset: 0;
-        opacity: var(--glass-noise-opacity);
-        background-image: 
-            repeating-conic-gradient(
-                from 0deg at 50% 50%,
-                rgba(255,255,255,0) 0deg,
-                rgba(255,255,255,0.1) 1deg,
-                rgba(255,255,255,0) 2deg
-            );
-        background-size: 60px 60px;
+        background: linear-gradient(
+            135deg,
+            #FFFCF9 0%,
+            #FFFFF9 25%,
+            #FFF9F2 50%,
+            #FFF2F9 75%,
+            #FFFCF9 100%
+        );
+        background-size: 200% 200%;
+        background-position: 0% 0%;
+        animation: chatbotGradientShift 20s ease-in-out infinite;
+        border-radius: 24px; /* Match container radius */
+        z-index: 0;
         pointer-events: none;
-        mix-blend-mode: overlay;
-        border-radius: 24px;
-        z-index: 1;
     }
     
-    /* ENHANCED: Moving rainbow reflection for glass effect */
-    .chatbot-container::before {
+    /* DEVICE FRAME EFFECT - TEMPORARILY DISABLED FOR TESTING */
+    /* TO ROLLBACK: Uncomment the entire block below to restore device frame */
+    /*
+    .chatbot-container.device-frame {
+        padding: 20px;
+        border: none;
+        border-radius: 24px;
+        box-shadow: none;
+        overflow: hidden;
+        position: relative;
+        background: rgba(255, 255, 255, 0.6);
+    }
+    
+    .chatbot-container.device-frame::after {
         content: '';
         position: absolute;
-        inset-block-start: -50%;
-        inset-inline-start: -50%;
-        inline-size: 200%;
-        block-size: 200%;
-        background: conic-gradient(
-            from 0deg at 50% 50%,
-            transparent,
-            rgba(255, 0, 136, var(--glass-reflection-opacity)),
-            rgba(0, 255, 255, var(--glass-reflection-opacity)),
-            rgba(255, 255, 0, var(--glass-reflection-opacity)),
-            transparent
+        inset: 20px;
+        background: linear-gradient(
+            135deg,
+            #FFFCF9 0%,
+            #FFFFF9 25%,
+            #FFF9F2 50%,
+            #FFF2F9 75%,
+            #FFFCF9 100%
         );
-        /* Removed glass reflection animation */
-        pointer-events: none;
-        mix-blend-mode: soft-light;
-        opacity: 0.3;
-        filter: blur(60px);
+        background-size: 200% 200%;
+        background-position: 0% 0%;
+        animation: chatbotGradientShift 20s ease-in-out infinite;
+        border-radius: 10px;
         z-index: 0;
+        pointer-events: none;
     }
+    */
+    /* END DEVICE FRAME EFFECT - DISABLED */
+    
+    /* RESTORED: Glass morphism effects */
+    /* To revert: Change display back to 'none' in both pseudo-elements */
+    
+    /* ENHANCED: Noise texture overlay - disabled due to gradient implementation */
+    /* Noise texture removed to simplify gradient rendering */
+    
+    /* Remove this overly broad rule that was breaking AI message gradients */
+    
+    /* ENHANCED: Moving rainbow reflection - DISABLED to prevent multiple gradients */
+    .chatbot-container::before {
+        display: none; /* Disabled to prevent multiple gradient layers */
+    }
+    
+    @keyframes rainbowRotate {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    /* END RESTORED: Glass morphism effects */
     
     /* ENHANCED: Glass reflection animation - disabled to prevent wobbling */
     @keyframes glassReflection {
         0% { transform: rotate(0deg) translateZ(0); }
         100% { transform: rotate(0deg) translateZ(0); }
+    }
+    
+    /* Subtle gradient shift animation */
+    @keyframes chatbotGradientShift {
+        0%, 100% { 
+            background-position: 0% 0%; 
+        }
+        50% { 
+            background-position: 100% 100%; 
+        }
     }
     
     /* Chrome, Safari and Opera - hide scrollbar */
@@ -276,16 +302,9 @@
     }
     
     
-    /* ENHANCED: Professional hover state with depth */
+    /* Hover state - disabled to prevent frame */
     .chatbot-container:hover {
-        transform: translateY(-2px) scale(1.005);
-        box-shadow: 
-            0 4px 8px rgba(0, 0, 0, 0.04),
-            0 12px 24px rgba(0, 0, 0, 0.06),
-            0 32px 64px rgba(0, 0, 0, 0.08),
-            inset 0 0 0 1px rgba(255,255,255,0.6),
-            inset 0 -1px 2px rgba(0,0,0,0.03);
-        transition: all 0.4s var(--smooth-easing);
+        /* No hover effects */
     }
     
     /* ENHANCED: Active state for interactivity */
@@ -301,37 +320,94 @@
         flex: 1;
         display: flex;
         flex-direction: column;
-        gap: 20px;
-        overflow-y: auto;
-        overflow-x: hidden !important;
+        gap: 15px;  /* Reduced gap to save vertical space */
+        overflow: hidden;
         scrollbar-width: none;                  /* Firefox - hide scrollbar */
         -ms-overflow-style: none;               /* IE and Edge - hide scrollbar */
-        padding: 30px 20px 80px 20px;           /* INCREASED bottom padding from 50px to 80px */
-        justify-content: flex-start;
-        scroll-behavior: smooth;
+        padding: 20px;                          /* Even padding all around */
+        justify-content: flex-end;              /* Push messages to bottom */
+        /* REMOVED: Smooth scrolling since we're disabling scrolling */
         box-sizing: border-box;
         max-block-size: 100%;
         min-block-size: 0;
         position: relative;                     /* For gradient overlay positioning */
-        z-index: 2;                             /* Ensure messages are above pseudo elements */
+        pointer-events: none; /* Disable all pointer interactions */
+        z-index: 1; /* Above the gradient background */
+        /* FADE-OUT EFFECT: Professional mask gradient at top and bottom - ADDED 2025-08-01 */
+        /* TO ROLLBACK: Simply remove or comment out this entire mask block */
+        mask-image: linear-gradient(
+            to bottom,
+            transparent 0%,
+            black 15%,
+            black 85%,
+            transparent 100%
+        );
+        -webkit-mask-image: linear-gradient(
+            to bottom,
+            transparent 0%,
+            black 15%,
+            black 85%,
+            transparent 100%
+        );
+        mask-size: 100% 100%;
+        -webkit-mask-size: 100% 100%;
+        mask-repeat: no-repeat;
+        -webkit-mask-repeat: no-repeat;
+        /* END FADE-OUT EFFECT */
     }
     
-    /* Bottom gradient overlay to ensure last message is visible */
-    .chat-messages::after {
-        content: '';
-        position: absolute;
-        inset-block-end: 0;
-        inset-inline: 0;
-        block-size: 60px;                       /* Height of fade area */
-        background: linear-gradient(
-            to top,
-            rgba(255, 252, 249, 1) 0%,
-            rgba(255, 252, 249, 0.8) 20%,
-            rgba(255, 252, 249, 0) 60%
-        );
-        pointer-events: none;
-        z-index: 5;
+    /* Fallback for browsers without mask support - using box-shadow inset */
+    @supports not (mask-image: linear-gradient(black, transparent)) {
+        .chat-messages {
+            position: relative;
+            /* Create fade effect using inset box-shadows */
+            box-shadow: 
+                inset 0 30px 30px -20px rgba(252, 251, 248, 1),
+                inset 0 -30px 30px -20px rgba(252, 251, 248, 1);
+        }
+        
+        /* Alternative: use ::before for top fade only (::after is used for spacer) */
+        .chat-messages::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: 15%;
+            pointer-events: none;
+            z-index: 2;
+            background: linear-gradient(to bottom, rgba(252, 251, 248, 1) 0%, rgba(252, 251, 248, 0.8) 30%, transparent 100%);
+        }
     }
+    
+    /* Adjust padding when device frame is active - DISABLED FOR TESTING */
+    /* TO ROLLBACK: Uncomment this block when restoring device frame */
+    /*
+    .chatbot-container.device-frame .chat-messages {
+        padding: 30px 20px 30px 20px;
+        margin: 0;
+        border-radius: 10px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 100%;
+        box-sizing: border-box;
+        position: relative;
+        z-index: 1;
+        background: transparent;
+        border: none;
+        box-shadow: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+    */
+    
+    /* Re-enable pointer events for child elements */
+    .chat-messages > * {
+        pointer-events: auto;
+    }
+    
+    /* Spacer is defined elsewhere, remove this conflicting rule */
     
     /* Chrome, Safari and Opera - hide scrollbar */
     .chat-messages::-webkit-scrollbar {
@@ -342,53 +418,159 @@
     
     /* Enhanced individual chat message bubbles */
     .chat-message {
-        opacity: 0;
         display: flex;
         align-items: flex-end;
         max-inline-size: 100%;
         inline-size: 100%;
         overflow: visible;
         padding: 2px 0;
-        will-change: opacity;
-        /* Only animate opacity on parent, let child handle transform */
-        transition: opacity 0.5s var(--elastic-easing);
         position: relative;                     /* Ensure messages stay above gradient */
-        z-index: 1;
+        opacity: 0;                             /* Initially hidden until animation */
+        /* Transform moved to specific message types below */
+        /* RESTORED: Elastic easing for bouncier message entrance */
+        /* To revert: Change transform timing back to cubic-bezier(0.4, 0, 0.2, 1) */
+        transition: opacity 0.5s ease, transform 0.5s var(--elastic-easing);
+    }
+    
+    /* RESTORED: Side slide-in animations for more dynamic entrance */
+    /* To revert: Remove this block and add back transform: translateY(20px) to .chat-message above */
+    .chat-message.from-user {
+        transform: translateY(30px) translateX(-20px) scale(0.9);  /* Start smaller, left and down */
+    }
+    
+    .chat-message.from-ai {
+        transform: translateY(30px) translateX(20px) scale(0.9);   /* Start smaller, right and down */
+    }
+    /* END RESTORED: Side slide-in animations */
+    
+    /* ENHANCEMENT: Professional scale and blur transitions */
+    /* To revert: Remove this entire section */
+    .chat-message p {
+        filter: blur(0);
+        transform: scale(1);
+        transition: 
+            filter 0.4s ease-out,
+            transform 0.6s var(--elastic-easing),
+            opacity 0.4s ease-out;
+        transform-origin: center center;
+        will-change: transform, filter, opacity;
+    }
+    
+    /* Initial state - more dramatic scale for better pop effect */
+    .chat-message:not(.visible) p {
+        filter: blur(8px);
+        transform: scale(0.4) rotate(-5deg); /* Much smaller with rotation */
+        opacity: 0;
+    }
+    
+    /* Enhance the visible state transition */
+    .chat-message.visible p {
+        filter: blur(0);
+        transform: scale(1);
+        opacity: 1;
+        transition-delay: 0.05s; /* Faster response */
+        animation: bubblePopEnhanced 0.8s var(--elastic-easing) forwards;
+    }
+    
+    /* Enhanced bubble pop animation with more dramatic bounce */
+    @keyframes bubblePopEnhanced {
+        0% {
+            transform: scale(0.5) rotate(-5deg); /* Start very small with slight rotation */
+            opacity: 0;
+        }
+        30% {
+            opacity: 1;
+            transform: scale(0.8) rotate(2deg);
+        }
+        60% {
+            transform: scale(1.15) rotate(-1deg); /* More pronounced overshoot */
+        }
+        80% {
+            transform: scale(0.92) rotate(0deg); /* Stronger pullback */
+        }
+        100% {
+            transform: scale(1) rotate(0deg);
+        }
+    }
+    /* END ENHANCEMENT: Professional scale and blur transitions */
+    
+    /* Make messages visible when animated - slides to center */
+    .chat-message.visible {
+        opacity: 1;
+        transform: translateY(0) translateX(0) scale(1);  /* End at center position and full size */
+    }
+    
+    /* ENHANCEMENT: Subtle emphasis animation when message appears */
+    /* To revert: Remove this entire block */
+    .chat-message.visible.message-emphasis {
+        animation: subtleEmphasis 0.8s ease-out forwards;
+        animation-delay: 0.2s;
+    }
+    
+    @keyframes subtleEmphasis {
+        0% {
+            filter: brightness(1);
+        }
+        50% {
+            filter: brightness(1.1) contrast(1.05);
+            transform: translateY(0) translateX(0) scale(1.03);
+        }
+        100% {
+            filter: brightness(1);
+            transform: translateY(0) translateX(0) scale(1);
+        }
+    }
+    /* END ENHANCEMENT: Subtle emphasis */
+    
+    /* ADDED: Fade out animation for smooth reset */
+    .chat-message.fade-out {
+        opacity: 0;
+        transition: opacity 0.8s ease-out;
     }
     
     /* Special handling for last message to ensure visibility */
     .chat-message:last-child {
-        margin-block-end: 20px;                 /* Extra margin to keep above gradient */
+        margin-block-end: 0;                    /* No extra margin needed */
+    }
+    
+    /* Ensure messages don't clip */
+    .chat-message {
+        flex-shrink: 0; /* Prevent messages from shrinking */
+    }
+    
+    /* Ensure the last message is always fully visible */
+    .chat-message p {
+        flex-shrink: 0; /* Prevent text from shrinking */
+        min-height: fit-content;
     }
     
     /* Message positioning and entry animations */
-    .chat-message.from-user {
+    /* Updated 2025-08-01: Added 60px padding to align with nav CTA - v2 */
+    .chatbot-container .chat-messages .chat-message.from-user {
         justify-content: flex-start;
+        padding-left: 60px;                     /* Push user messages same amount as AI */
         padding-inline-end: 0;                  /* No extra padding - uses container padding */
     }
     
-    .chat-message.from-ai {
+    .chatbot-container .chat-messages .chat-message.from-ai {
         justify-content: flex-end;
-        padding-inline-start: 0;                /* No extra padding - uses container padding */
+        padding-left: 60px;                     /* Push AI messages to align with nav CTA */
+        padding-inline-end: 0;
     }
     
-    .chat-message.visible {
-        opacity: 1;
-    }
+    /* Removed visible class - not needed */
     
     /* ===== ENHANCED MESSAGE BUBBLE STYLING ===== */
     .chat-message p {
-        padding: 24px 28px 26px;
+        padding: 24px 28px 28px; /* Balanced padding */
         border-radius: 28px;
         font-size: 20px;
-        line-height: 1.6;
+        line-height: 1.65; /* Slightly increased for better readability */
         position: relative;
         max-inline-size: min(380px, 85%);
         inline-size: fit-content;
         font-weight: 400;
-        /* Initial state handled by animation */
-        opacity: 0;
-        /* Removed transition to prevent conflict with animation */
+        /* Static display - no opacity changes */
         overflow: visible;
         word-wrap: break-word;
         word-break: normal;
@@ -405,41 +587,61 @@
         -webkit-backdrop-filter: blur(14px);
         color: var(--color-text-primary);
         border-block-end-inline-start-radius: 8px;
-        /* ENHANCED: Subtle layered shadow for depth */
-        box-shadow: 
-            0 1px 2px rgba(0, 0, 0, 0.04),
-            0 4px 8px rgba(0, 0, 0, 0.06),
-            inset 0 1px 0 rgba(255, 255, 255, 0.5);
-        border: 1px solid rgba(255, 255, 255, 0.8);
+        /* Reduced shadow for more subtle effect */
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.3);
     }
     
     /* ENHANCED: AI message with premium glass effect */
     .chat-message.from-ai p {
-        /* ENHANCED2: Static gradient background */
+        /* Gradient background restored with !important to override any inheritance */
         background: linear-gradient(
             135deg, 
             var(--color-ai-gradient-light) 0%,
             var(--color-ai-gradient-mid) 60%,
             var(--color-ai-gradient-dark) 100%
-        );
-        color: white;
+        ) !important;
+        color: white !important;
         border-block-end-inline-end-radius: 8px;
         border: 1px solid rgba(255, 255, 255, 0.3);
-        /* ENHANCED: Premium shadow with glow */
-        box-shadow: 
-            0 2px 4px rgba(255, 0, 136, 0.1),
-            0 8px 16px rgba(255, 0, 136, 0.2),
-            0 16px 32px rgba(255, 0, 136, 0.15),
-            inset 0 1px 0 rgba(255, 255, 255, 0.3),
-            inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+        /* Single shadow to prevent repaints */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         min-block-size: fit-content;
         overflow-wrap: break-word;
-        hyphens: auto;
-        -webkit-hyphens: auto;
-        -moz-hyphens: auto;
-        text-rendering: optimizeLegibility;
+        word-break: break-word; /* Ensure long words break properly */
+        /* hyphens removed - can cause text reflow */
+        /* text-rendering: optimizeLegibility; REMOVED - can cause shimmer */
         position: relative;
-        overflow: hidden;
+        /* Prevent text clipping */
+        overflow: visible !important;
+    }
+    
+    /* RESTORED: Initial glow that fades for AI messages */
+    .chat-message.from-ai.visible p {
+        animation: aiGlowFade 2.5s ease-out forwards;
+        animation-delay: 0.2s;  /* Small delay so glow appears after message slides in */
+    }
+    
+    @keyframes aiGlowFade {
+        0% {
+            box-shadow: 
+                0 2px 4px rgba(0, 0, 0, 0.1),
+                0 0 30px rgba(255, 0, 136, 0.3);  /* Start with pink glow */
+        }
+        60% {
+            box-shadow: 
+                0 2px 4px rgba(0, 0, 0, 0.1),
+                0 0 30px rgba(255, 0, 136, 0.3);  /* Hold the glow longer */
+        }
+        100% {
+            box-shadow: 
+                0 2px 4px rgba(0, 0, 0, 0.1);  /* End with just the base shadow */
+        }
+    }
+    
+    /* Hide empty message bubbles */
+    .chat-message p:empty {
+        display: none;
     }
     
     
@@ -451,106 +653,37 @@
         /* Removed glow pulse animation */
     }
     
-    /* ENHANCED3: Much softer glow pulse animation */
-    @keyframes aiGlowPulseSoft {
-        0% { 
-            box-shadow: 
-                0 2px 4px rgba(255, 0, 136, 0.1),
-                0 8px 16px rgba(255, 0, 136, 0.2),
-                0 16px 32px rgba(255, 0, 136, 0.15),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3),
-                inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-        }
-        50% { 
-            box-shadow: 
-                0 2px 4px rgba(255, 0, 136, 0.1),
-                0 8px 16px rgba(255, 0, 136, 0.2),
-                0 16px 32px rgba(255, 0, 136, 0.15),
-                0 0 12px 4px rgba(255, 0, 136, 0.15),  /* REDUCED from 20px 10px 0.3 */
-                inset 0 1px 0 rgba(255, 255, 255, 0.3),
-                inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-        }
-        100% { 
-            box-shadow: 
-                0 2px 4px rgba(255, 0, 136, 0.1),
-                0 8px 16px rgba(255, 0, 136, 0.2),
-                0 16px 32px rgba(255, 0, 136, 0.15),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3),
-                inset 0 -1px 0 rgba(0, 0, 0, 0.1);
-        }
-    }
+    /* REMOVED - glow pulse animation */
     
-    /* Message appearance animation */
-    .chat-message.visible p {
-        transform: scale(1) translateY(0) translateX(0);
-        opacity: 1;
-        overflow: hidden;
-    }
+    /* Message appearance - static display */
     
-    /* ENHANCED2: Message pop effect with elastic bounce */
+    /* REMOVED animations to stop wobbling */
     .chat-message.from-user.visible p {
-        animation: messagePopLeft 0.5s var(--elastic-easing) forwards;
+        /* animation removed */
     }
     
     .chat-message.from-ai.visible p {
-        animation: messagePopRight 0.5s var(--elastic-easing) forwards;
+        /* animation removed */
     }
     
-    @keyframes messagePopLeft {
-        0%   { 
-            transform: scale(0.94) translateY(3px) translateX(-20px);
-            opacity: 0;
-        }
-        60%  { 
-            transform: scale(1.02) translateY(-1px) translateX(1px);
-            opacity: 1;
-        }
-        100% { 
-            transform: scale(1) translateY(0) translateX(0);
-            opacity: 1;
-        }
-    }
+    /* REMOVED - message pop animations */
     
-    @keyframes messagePopRight {
-        0%   { 
-            transform: scale(0.94) translateY(3px) translateX(20px);
-            opacity: 0;
-        }
-        60%  { 
-            transform: scale(1.02) translateY(-1px) translateX(-1px);
-            opacity: 1;
-        }
-        100% { 
-            transform: scale(1) translateY(0) translateX(0);
-            opacity: 1;
-        }
-    }
-    
-    /* ENHANCED: Micro-interactions with depth */
+    /* Hover states - disabled to prevent wobble */
     .chat-message p {
-        transition: transform 0.2s var(--smooth-easing), box-shadow 0.2s var(--smooth-easing);
+        /* No transition to prevent wobble */
     }
     
     .chat-message p:hover {
-        transform: translateY(-2px);
+        /* No transform on hover */
     }
     
     .chat-message.from-user p:hover {
-        box-shadow: 
-            0 2px 4px rgba(0, 0, 0, 0.06),
-            0 8px 16px rgba(0, 0, 0, 0.08),
-            inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        /* No hover effects - removed to prevent errors */
     }
     
-    /* AI message hover gets enhanced pink glow */
+    /* AI message hover - removed */
     .chat-message.from-ai p:hover {
-        box-shadow: 
-            0 4px 8px rgba(255, 0, 136, 0.2),
-            0 12px 24px rgba(255, 0, 136, 0.3),
-            0 20px 40px rgba(255, 0, 136, 0.2),
-            inset 0 1px 0 rgba(255, 255, 255, 0.4),
-            inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-        transform: translateY(-2px) scale(1.02);
+        /* No hover effects - removed to prevent errors */
     }
     
     /* ===== TYPING INDICATORS ===== */
@@ -594,39 +727,59 @@
         border-radius: 50%;
         opacity: 0.5;
         transform: scale(0.8);
-        will-change: transform, opacity;
+        /* Removed will-change to prevent issues */
         box-shadow: 0 0 2px rgba(255, 0, 136, 0.2);
     }
     
+    /* ENHANCED: Sophisticated staggered typing dots */
+    /* To revert: Replace this entire section with the original above */
+    .typing-indicator span {
+        animation: dotWave 1.4s infinite ease-in-out, dotGlow 1.4s infinite ease-in-out;
+    }
+    
     .typing-indicator span:nth-child(1) {
-        animation: dotPulse1 var(--typing-cycle-duration) infinite;
+        animation-delay: 0s;
     }
     
     .typing-indicator span:nth-child(2) {
-        animation: dotPulse1 var(--typing-cycle-duration) infinite;
-        animation-delay: 0.15s;
+        animation-delay: 0.12s;
     }
     
     .typing-indicator span:nth-child(3) {
-        animation: dotPulse1 var(--typing-cycle-duration) infinite;
-        animation-delay: 0.3s;
+        animation-delay: 0.24s;
     }
     
-    @keyframes dotPulse1 {
-        0%, 80%, 100% { 
-            opacity: 0.5; 
+    @keyframes dotWave {
+        0%, 60%, 100% { 
+            opacity: 0.4; 
             transform: scale(0.8) translateY(0);
         }
         30% { 
             opacity: 1; 
-            transform: scale(1.4) translateY(-4px);
+            transform: scale(1.1) translateY(-6px);
+            filter: brightness(1.2);
         }
     }
+    
+    /* Add subtle glow to active dot */
+    .typing-indicator span {
+        transition: box-shadow 0.3s ease;
+    }
+    
+    @keyframes dotGlow {
+        0%, 60%, 100% {
+            box-shadow: 0 0 0 rgba(255, 255, 255, 0);
+        }
+        30% {
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+        }
+    }
+    /* END ENHANCED: Sophisticated staggered typing dots */
     
     /* ===== CHATBOT RESPONSIVE ADJUSTMENTS ===== */
     @media (width <= 768px) {
         .chatbot-container {
-            padding: 2rem;
+            padding: 0;                          /* Remove padding to prevent clipping */
             min-block-size: 100%;               /* Ensure fixed height on mobile */
         }
         
@@ -638,8 +791,25 @@
         
         .chat-messages {
             gap: 16px;
-            padding: 20px 15px 60px 15px;       /* Adjusted bottom padding for mobile */
+            padding: 30px 15px 50px 15px;        /* Extra bottom padding to prevent clipping */
+            overflow-y: auto;                     /* Enable scrolling on mobile */
+            justify-content: flex-start;          /* Start from top on mobile */
         }
+        
+        .chatbot-container .chat-messages .chat-message.from-user,
+        .chatbot-container .chat-messages .chat-message.from-ai {
+            padding-left: 0;                      /* Reset message padding on mobile */
+        }
+        
+        /* Maintain device frame adjustments on mobile - DISABLED FOR TESTING */
+        /* TO ROLLBACK: Uncomment when restoring device frame */
+        /*
+        .chatbot-container.device-frame .chat-messages {
+            padding: 20px 20px 30px 20px;
+            margin: 0;
+            justify-content: flex-end;
+        }
+        */
         
         /* Reduce gradient overlay height on mobile */
         .chat-messages::after {
@@ -651,6 +821,7 @@
             padding: 22px 24px 24px;
             border-radius: 24px;
             max-inline-size: 90%;
+            text-align: left !important;         /* Force left alignment on mobile */
         }
         
         /* Ensure proper text sizing on mobile */
@@ -672,17 +843,7 @@
             margin-block-end: 15px;
         }
         
-        /* Reduce animation intensity on mobile */
-        @keyframes messagePop {
-            0%   { 
-                transform: scale(0.96) translateY(2px);
-                opacity: 0;
-            }
-            100% { 
-                transform: scale(1) translateY(0);
-                opacity: 1;
-            }
-        }
+        /* REMOVED - animation on mobile */
     }
     
     /* Ensure text is always contained within bubbles */
@@ -697,6 +858,21 @@
     .chat-message[data-message="2"] p {
         max-inline-size: min(380px, 85%);
     }
+    
+    /* Ensure AI message that contains the clipping text has enough space */
+    .chat-message[data-message="4"] p {
+        padding: 24px 28px 30px; /* Balanced padding */
+        line-height: 1.65; /* Good line height for readability */
+        max-inline-size: min(350px, 80%); /* Slightly wider for better text flow */
+    }
+    
+    /* Add small spacer after last message to prevent clipping */
+    .chat-messages::after {
+        content: '';
+        display: block;
+        height: 20px; /* Small spacer to ensure last message has breathing room */
+        flex-shrink: 0;
+    }
 }
 
 /* ===== MARQUEE ANIMATION SYSTEM ===== */
@@ -709,6 +885,11 @@
         to {
             transform: translateX(-50%);        /* Move exactly half width for seamless loop */
         }
+    }
+    
+    /* Apply marquee animation to track */
+    .marquee__track {
+        animation: marquee 60s linear infinite;
     }
     
     /* Reduced motion support for marquee */

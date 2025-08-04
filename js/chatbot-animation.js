@@ -38,19 +38,19 @@ class ChatbotAnimation {
         // Enhanced animation configuration
         this.config = {
             typingSpeed: 35,                    // Even faster base milliseconds per character
-            messageDelay: 1600,                 // Quick delay between messages
+            messageDelay: 2500,                 // Reduced delay between messages (2.5 seconds to read)
             initialDelay: 1000,                 // Standard delay before starting first loop
             loopDelay: 3000,                    // Good delay before restarting loop
             speedVariation: 10,                 // Minimal variation in typing speed
-            typingIndicatorDuration: 1000,      // Base typing indicator duration
+            typingIndicatorDuration: 700,       // Reduced base typing indicator duration
             enableTypingIndicator: true,        // Show typing indicator for AI messages
             enableMicroInteractions: true,      // Enable hover effects
             // NEW: Complexity-based timing configuration
             complexityTiming: {
-                simple: 800,                    // Short messages (< 50 chars)
-                medium: 1200,                   // Medium messages (50-100 chars)
-                complex: 1800,                  // Long messages (> 100 chars)
-                variation: 300                  // ±150ms random variation
+                simple: 500,                    // Reduced: Short messages (< 50 chars)
+                medium: 800,                    // Reduced: Medium messages (50-100 chars)
+                complex: 1200,                  // Reduced: Long messages (> 100 chars)
+                variation: 200                  // Reduced: ±100ms random variation
             },
             // ENHANCED2: Message pop animation timing
             messagePopTiming: {
@@ -64,12 +64,14 @@ class ChatbotAnimation {
         this.elements = {
             container: document.getElementById('chatMessages'),
             placeholder: document.querySelector('.animation-placeholder'),
+            chatbotContainer: document.querySelector('.chatbot-container'),
             messages: []
         };
         
         // Animation state
         this.isAnimating = false;
         this.currentMessageIndex = 0;
+        this.currentConversation = 0;           // Track which conversation to show
         this.loopTimeout = null;
         this.typingTimeout = null;
         this.indicatorTimeout = null;
@@ -78,9 +80,37 @@ class ChatbotAnimation {
         // Check for reduced motion preference
         this.respectsReducedMotion = this.prefersReducedMotion();
         
+        // Define three conversation sets
+        this.conversations = [
+            // Conversation 1 - Supplements
+            [
+                { type: 'user', text: 'Which longevity supplements have largest impact for a 50 year old woman?' },
+                { type: 'ai', text: 'Omega-3, Vitamin D3 + K2, NMN, Spermidine, and Magnesium show strong benefits for women\'s healthspan after 50.' },
+                { type: 'user', text: 'Does collagen work for skin?' },
+                { type: 'ai', text: 'Yes, studies show hydrolyzed collagen can improve skin elasticity, hydration, and reduce wrinkles over time.' }
+            ],
+            // Conversation 2 - Blood tests
+            [
+                { type: 'user', text: 'What are the best blood tests to check health?' },
+                { type: 'ai', text: 'Key tests include CBC, lipid panel, HbA1c, CRP, liver enzymes, vitamin D, and comprehensive metabolic panel.' },
+                { type: 'user', text: 'What are the benefits of testing ferritin, for a man?' },
+                { type: 'ai', text: 'High ferritin may signal inflammation or iron overload, increasing risks of heart disease, oxidative stress, and faster aging.' },
+                { type: 'user', text: 'How to reduce cholesterol naturally?' },
+                { type: 'ai', text: 'Psyllium husk and red yeast rice are both used to naturally lower LDL cholesterol in diet-based approaches.' }
+            ],
+            // Conversation 3 - Functional medicine
+            [
+                { type: 'user', text: 'What is functional medicine?' },
+                { type: 'ai', text: 'Functional medicine addresses root causes of illness using personalized, systems-based approaches focused on prevention, lifestyle, and nutrition.' },
+                { type: 'user', text: 'Does it cost a lot?' },
+                { type: 'ai', text: 'Yes, functional medicine can be costly, often not covered by insurance, but offers deeper, personalized health insights.' }
+            ]
+        ];
+        
         if (this.elements.container) {
             console.log('Enhanced chatbot animation initializing...');
             this.init();
+            this.setupIntersectionObserver();
         } else {
             console.log('Chatbot container not found - animation disabled');
         }
@@ -144,12 +174,20 @@ class ChatbotAnimation {
      * Store original text and set initial states
      */
     prepareMessages() {
+        // Get the current conversation
+        const currentConvo = this.conversations[this.currentConversation];
+        
         this.elements.messages.forEach((message, index) => {
             const p = message.querySelector('p');
             if (p) {
-                // Store original text in data attribute
-                if (!p.dataset.originalText) {
-                    p.dataset.originalText = p.textContent.trim();
+                if (currentConvo[index]) {
+                    // Update the text based on current conversation
+                    p.dataset.originalText = currentConvo[index].text;
+                    message.style.display = ''; // Make sure it's visible
+                } else {
+                    // Hide messages not used in current conversation
+                    p.dataset.originalText = '';
+                    message.style.display = 'none';
                 }
                 
                 // Clear text content
@@ -161,7 +199,9 @@ class ChatbotAnimation {
                 // ENHANCED2: Remove any lingering animation classes
                 p.classList.remove('message-popped');
                 
-                console.log(`Message ${index + 1} prepared: "${p.dataset.originalText}"`);
+                if (currentConvo[index]) {
+                    console.log(`Message ${index + 1} prepared: "${p.dataset.originalText}"`);
+                }
             }
         });
     }
@@ -216,9 +256,14 @@ class ChatbotAnimation {
         }
         
         try {
-            // Animate each message in sequence
-            for (let i = 0; i < this.elements.messages.length; i++) {
+            // Get current conversation to know how many messages to animate
+            const currentConvo = this.conversations[this.currentConversation];
+            
+            // Animate each message in sequence (only up to conversation length)
+            for (let i = 0; i < currentConvo.length; i++) {
                 const message = this.elements.messages[i];
+                if (!message) continue;
+                
                 const p = message.querySelector('p');
                 const text = p.dataset.originalText;
                 const isAIMessage = message.classList.contains('from-ai');
@@ -228,11 +273,41 @@ class ChatbotAnimation {
                 // Show message container with entrance animation
                 message.classList.add('visible');
                 
+                // ENHANCEMENT: Add emphasis class for subtle highlight
+                // To revert: Remove these 2 lines
+                message.classList.add('message-emphasis');
+                setTimeout(() => message.classList.remove('message-emphasis'), 700);
+                
                 // ENHANCED2: Small delay for message entrance animation to start
                 await this.delay(this.config.messagePopTiming.delay);
                 
                 // Auto-scroll to latest message with improved logic
                 this.scrollToLatestMessage(i === this.elements.messages.length - 1);
+                
+                // ENHANCEMENT: Natural response delay before AI starts thinking
+                // To revert: Remove this entire if block
+                if (isAIMessage && i > 0) {
+                    // Calculate delay based on previous user message length
+                    const prevMessage = this.elements.messages[i - 1];
+                    if (prevMessage) {
+                        const prevP = prevMessage.querySelector('p');
+                        const prevText = prevP ? prevP.dataset.originalText : '';
+                        
+                        // Simulate "reading time" - longer messages take longer to read
+                        let readingDelay;
+                        if (prevText.length < 20) {
+                            readingDelay = 400 + Math.random() * 200; // 400-600ms
+                        } else if (prevText.length < 50) {
+                            readingDelay = 600 + Math.random() * 300; // 600-900ms
+                        } else {
+                            readingDelay = 800 + Math.random() * 400; // 800-1200ms
+                        }
+                        
+                        console.log(`AI reading delay for "${prevText.substring(0, 30)}..." (${prevText.length} chars): ${Math.round(readingDelay)}ms`);
+                        await this.delay(readingDelay);
+                    }
+                }
+                // END ENHANCEMENT
                 
                 // Show typing indicator for AI messages with dynamic duration
                 if (isAIMessage && this.config.enableTypingIndicator) {
@@ -247,11 +322,22 @@ class ChatbotAnimation {
                 this.triggerMessagePop(p);
                 
                 // Final scroll to ensure message is fully visible
-                this.scrollToLatestMessage(i === this.elements.messages.length - 1);
+                this.scrollToLatestMessage(i === currentConvo.length - 1);
                 
                 // Wait before next message (except for last message)
                 if (i < this.elements.messages.length - 1) {
-                    await this.delay(this.config.messageDelay);
+                    // Shorter delay between user message and AI response
+                    const nextMessage = this.elements.messages[i + 1];
+                    const isNextAI = nextMessage.classList.contains('from-ai');
+                    const isCurrentUser = this.elements.messages[i].classList.contains('from-user');
+                    
+                    if (isCurrentUser && isNextAI) {
+                        // Quick 500ms delay before AI starts thinking
+                        await this.delay(500);
+                    } else {
+                        // Normal delay between other messages
+                        await this.delay(this.config.messageDelay);
+                    }
                 }
                 
                 this.currentMessageIndex = i + 1;
@@ -262,8 +348,8 @@ class ChatbotAnimation {
             // Wait before restarting the loop
             await this.delay(this.config.loopDelay);
             
-            // Reset and restart
-            this.resetAnimation();
+            // Reset and restart (now async)
+            await this.resetAnimation();
             
         } catch (error) {
             console.error('Error during animation:', error);
@@ -318,6 +404,22 @@ class ChatbotAnimation {
             
             let currentIndex = 0;
             
+            // ENHANCEMENT: Variable typing speed based on message length
+            // To revert: Replace with: const baseSpeed = this.config.typingSpeed;
+            const messageLength = text.length;
+            let baseSpeed;
+            if (messageLength < 30) {
+                baseSpeed = 25; // Very fast for short messages
+            } else if (messageLength < 60) {
+                baseSpeed = 30; // Fast for medium messages
+            } else if (messageLength < 100) {
+                baseSpeed = 35; // Normal speed
+            } else {
+                baseSpeed = 40; // Slightly slower for long messages
+            }
+            console.log(`Typing speed for "${text.substring(0, 20)}..." (${messageLength} chars): ${baseSpeed}ms`);
+            // END ENHANCEMENT
+            
             const typeNextCharacter = () => {
                 if (currentIndex <= text.length && this.isAnimating) {
                     // Update text content
@@ -326,7 +428,6 @@ class ChatbotAnimation {
                     
                     if (currentIndex <= text.length) {
                         // Calculate next typing delay with variation
-                        const baseSpeed = this.config.typingSpeed;
                         const variation = (Math.random() - 0.5) * this.config.speedVariation;
                         const delay = Math.max(20, baseSpeed + variation);
                         
@@ -379,8 +480,8 @@ class ChatbotAnimation {
             
             // For the last message, ensure it's fully visible above the gradient
             if (isLastMessage) {
-                // Account for the bottom gradient overlay (60px) and extra margin (20px)
-                const bottomOffset = 80;
+                // Minimal offset - just enough to ensure visibility
+                const bottomOffset = 15;
                 const targetScroll = scrollHeight - containerHeight + bottomOffset;
                 
                 // Only scroll if needed
@@ -400,7 +501,7 @@ class ChatbotAnimation {
     /**
      * Reset animation to initial state
      */
-    resetAnimation() {
+    async resetAnimation() {
         console.log('Resetting chatbot animation');
         
         this.isAnimating = false;
@@ -421,6 +522,14 @@ class ChatbotAnimation {
             this.popTimeout = null;
         }
         
+        // Fade out all messages
+        this.elements.messages.forEach(message => {
+            message.classList.add('fade-out');
+        });
+        
+        // Wait for fade-out transition to complete (0.8s as defined in CSS)
+        await this.delay(800);
+        
         // Remove active class from placeholder
         if (this.elements.placeholder) {
             this.elements.placeholder.classList.remove('chat-active');
@@ -428,7 +537,7 @@ class ChatbotAnimation {
         
         // Reset all messages
         this.elements.messages.forEach(message => {
-            message.classList.remove('visible');
+            message.classList.remove('visible', 'fade-out');
             const p = message.querySelector('p');
             if (p) {
                 p.textContent = '';
@@ -442,6 +551,16 @@ class ChatbotAnimation {
         if (this.elements.container) {
             this.elements.container.scrollTop = 0;
         }
+        
+        // Small pause before restarting for visual clarity
+        await this.delay(500);
+        
+        // Switch to the next conversation
+        this.currentConversation = (this.currentConversation + 1) % this.conversations.length;
+        console.log(`Switching to conversation ${this.currentConversation + 1}`);
+        
+        // Prepare messages with new conversation
+        this.prepareMessages();
         
         // Schedule restart
         this.scheduleStart();
@@ -476,7 +595,6 @@ class ChatbotAnimation {
      */
     pause() {
         if (this.isAnimating) {
-            console.log('Pausing chatbot animation');
             this.isAnimating = false;
             
             if (this.typingTimeout) {
@@ -498,6 +616,7 @@ class ChatbotAnimation {
                 clearTimeout(this.popTimeout);
                 this.popTimeout = null;
             }
+            
         }
     }
     
@@ -506,8 +625,52 @@ class ChatbotAnimation {
      */
     resume() {
         if (!this.isAnimating) {
-            console.log('Resuming chatbot animation');
             this.resetAnimation();
+        }
+    }
+    
+    /**
+     * Set up intersection observer to pause animation when out of view
+     */
+    setupIntersectionObserver() {
+        // Initialize pausedByObserver flag
+        this.pausedByObserver = false;
+        
+        // Create observer with threshold
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                
+                if (entry.isIntersecting) {
+                    // Element is in view - resume if was paused by observer
+                    if (this.pausedByObserver) {
+                        console.log('Chatbot entering viewport - resuming animation');
+                        this.pausedByObserver = false;
+                        this.resume();
+                    }
+                } else {
+                    // Element is out of view - pause
+                    if (this.isAnimating && !this.pausedByObserver) {
+                        console.log('Chatbot leaving viewport - pausing animation');
+                        this.pausedByObserver = true;
+                        this.pause();
+                    }
+                }
+            });
+        }, {
+            // Use multiple thresholds to ensure proper detection
+            threshold: [0, 0.1, 0.5, 0.9, 1.0],
+            // Negative margin to trigger pause earlier when scrolling away
+            rootMargin: '-100px 0px -100px 0px'
+        });
+        
+        // Start observing the outer placeholder container for better viewport detection
+        // Use placeholder first, fallback to chatbot container, then messages container
+        const elementToObserve = this.elements.placeholder || this.elements.chatbotContainer || this.elements.container;
+        
+        if (elementToObserve) {
+            observer.observe(elementToObserve);
+        } else {
+            console.warn('No suitable element found for Intersection Observer');
         }
     }
     

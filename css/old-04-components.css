@@ -1,14 +1,12 @@
 /*
- * css/enhanced 04-components.css - Reusable UI Components with Professional Polish
+ * css/04-components.css - Reusable UI Components
  * 
- * Purpose: Buttons, cards, carousel controls, and other reusable interface elements with enhanced depth
+ * Purpose: Buttons, cards, carousel controls, and other reusable interface elements
  * Used by: All sections that need interactive components
  * Dependencies: 00-variables.css, 01-reset.css, 02-layout.css
  * Related: 03-sections.css (sections use these components), 05-animations.css (component animations)
  * 
  * LLM Working Notes:
- * - ENHANCED: Subtle depth and layering for animation placeholder
- * - ENHANCED: Professional glass morphism effects
  * - Component-first approach for maintainable CSS
  * - All components are self-contained and reusable
  * - Responsive design built into each component
@@ -20,7 +18,7 @@
  * - Carousel system: Navigation arrows, dots, viewport
  * - Marquee system: Logo scrolling animation
  * - Deployment cards: Hover effects and gradient strips
- * - Animation placeholder: Chatbot container styling with enhanced glass morphism
+ * - Animation placeholder: Chatbot container styling
  * - Utility classes: Text colors, gradients, underlines
  */
 
@@ -222,7 +220,7 @@
         display: flex;
         flex-direction: column;
         min-block-size: clamp(40rem, 54vw, 48rem);
-        padding: 0; /* Remove padding - now on block-container-link */
+        padding: var(--gap-4);
         box-sizing: border-box;
         user-select: none;
         position: relative;
@@ -234,8 +232,6 @@
         overflow: hidden;
         z-index: 1;
         perspective: 1000px;                    /* 3D perspective for card flip */
-        -webkit-tap-highlight-color: transparent; /* Remove blue tap highlight on mobile */
-        -webkit-touch-callout: none; /* Disable callout on long-press */
     }
     
     /* Card gradient strip - hidden by default on desktop */
@@ -247,8 +243,7 @@
         block-size: 4px;
         background: var(--gradient-spectrum-90);
         transform: translateX(-100%);           /* Hidden by default */
-        transition: transform var(--transition-base), opacity var(--transition-base);
-        opacity: 1;
+        transition: transform var(--transition-base);
     }
     
     /* Desktop hover effects */
@@ -269,9 +264,9 @@
             z-index: 1;
         }
         
-        /* Keep gradient visible on touch devices - no hover hiding */
+        /* Show gradient strip on touch devices */
         .b-section[data-id="scale-ai"] .b-link:hover::before {
-            /* Inherit the default state - don't change on hover */
+            transform: translateX(0);
         }
         
         /* Subtle touch feedback */
@@ -303,17 +298,6 @@
         overflow: hidden;
     }
     
-    /* Remove focus outline that causes black border flash */
-    .b-section[data-id="scale-ai"] .b-link:focus-visible {
-        outline: none;
-    }
-    
-    /* Alternative subtle focus indicator for accessibility */
-    .b-section[data-id="scale-ai"] .b-link:focus-visible .card-front,
-    .b-section[data-id="scale-ai"] .b-link:focus-visible .card-back {
-        box-shadow: 0 0 0 2px var(--color-accent), var(--shadow-md);
-    }
-    
     /* Front face - default visible state */
     .b-section[data-id="scale-ai"] .card-front {
         background: transparent;
@@ -322,7 +306,7 @@
     
     /* Back face - initially hidden, rotated 180 degrees */
     .b-section[data-id="scale-ai"] .card-back {
-        background: transparent; /* Remove dark grey background */
+        background: var(--color-gray-300);
         transform: rotateY(180deg);
         z-index: 1;
     }
@@ -332,9 +316,9 @@
         transform: rotateY(180deg);
     }
     
-    /* Back face hover effect - removed dark background */
+    /* Back face hover effect */
     .b-section[data-id="scale-ai"] .b-link:hover .card-back {
-        /* No background change on hover */
+        background: var(--gradient-spectrum-97-5);
     }
     
     /* Card content containers */
@@ -345,8 +329,6 @@
         position: relative;
         z-index: 0;
         block-size: 100%;
-        padding: var(--gap-4); /* Add padding to prevent text clipping */
-        box-sizing: border-box;
     }
     
     /* Push content to bottom */
@@ -358,11 +340,11 @@
         margin-block-start: var(--gap-2);
     }
     
-    /* Back face content styling - left aligned */
+    /* Back face content styling */
     .b-section[data-id="scale-ai"] .card-back .block-container-link {
-        justify-content: flex-start;
-        text-align: left;
-        padding: var(--gap-4); /* Same padding as front face */
+        justify-content: center;
+        text-align: center;
+        padding: var(--gap-5);
     }
     
     .b-section[data-id="scale-ai"] .card-back .card__description {
@@ -374,7 +356,7 @@
     /* ===== CARD CONTENT STYLING ===== */
     .b-section[data-id="scale-ai"] .card__title {
         font-size: 2.8rem;
-        font-weight: 500;
+        font-weight: 600;
         margin-block-end: 1.5rem;
         color: var(--color-text-primary);
     }
@@ -432,145 +414,38 @@
         /* Show all cards on mobile */
         .b-section[data-id="scale-ai"] .b-link {
             display: flex !important;
-            text-align: left; /* Left align on mobile */
+            text-align: center;
             background: var(--color-gray-100);
             box-shadow: var(--shadow-md);
             min-block-size: auto;
-            /* Fix height jump on flip */
-            height: auto;
         }
         
-        /* Enable card flip on mobile with different behavior */
+        /* Disable card flip on mobile */
         .b-section[data-id="scale-ai"] .card-flip-container {
-            position: relative;
-            transform: none !important; /* Prevent any rotation */
-            transform-style: flat !important; /* Disable 3D transforms */
-            /* Ensure container maintains height */
-            min-height: 200px; /* Adjust based on content */
-        }
-        
-        /* Show both faces on mobile, toggle visibility */
-        .b-section[data-id="scale-ai"] .card-face {
-            position: absolute; /* Keep absolute for proper stacking */
-            transform: none !important; /* Ensure no rotation */
-            backface-visibility: visible;
-            height: 100%;
-            width: 100%;
-            top: 0;
-            left: 0;
-        }
-        
-        .b-section[data-id="scale-ai"] .card-front {
-            visibility: visible;
-            opacity: 1;
-            transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+            transform: none !important;
+            position: static;
         }
         
         .b-section[data-id="scale-ai"] .card-back {
-            visibility: hidden;
-            opacity: 0;
-            background: transparent;
-            transform: none !important; /* Fix backwards text */
-            transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+            display: none;                      /* Hide back face on mobile */
         }
         
-        /* When flipped on mobile - hide front, show back */
-        .b-section[data-id="scale-ai"] .b-link.flipped .card-front {
-            visibility: hidden;
-            opacity: 0;
+        .b-section[data-id="scale-ai"] .card-front {
+            position: static;
+            inline-size: 100%;
+            block-size: 100%;
         }
         
-        .b-section[data-id="scale-ai"] .b-link.flipped .card-back {
-            visibility: visible;
-            opacity: 1;
-        }
-        
-        /* Animation removed - using visibility transitions instead */
-        
-        /* Add gradient background to ALL flipped cards on mobile */
-        .b-section[data-id="scale-ai"] .b-link.flipped {
-            background: var(--gradient-spectrum-97-5) !important;
-        }
-        
-        /* Ensure gradient background shows on card back for all cards */
-        .b-section[data-id="scale-ai"] .b-link.flipped .card-back {
-            background: var(--gradient-spectrum-97-5) !important;
-        }
-        
-        /* Gradient strip base state on mobile - show by default on unflipped cards */
-        .b-section[data-id="scale-ai"] .b-link:not(.flipped)::before {
+        /* Show gradient strip on mobile */
+        .b-section[data-id="scale-ai"] .b-link::before {
             transform: translateX(0);
-            opacity: 1;
-            transition: opacity 0.3s ease-out;
         }
         
-        /* Hide gradient on flipped cards */
-        .b-section[data-id="scale-ai"] .b-link.flipped::before {
-            opacity: 0;
-        }
-        
-        /* Override with data attribute if present */
-        .b-section[data-id="scale-ai"] .b-link[data-gradient="hide"]::before {
-            opacity: 0;
-        }
-        
-        .b-section[data-id="scale-ai"] .b-link[data-gradient="show"]::before {
-            opacity: 1;
-        }
-        
-        /* Left align mobile text */
+        /* Center mobile text */
         .b-section[data-id="scale-ai"] .card-front .card__title,
         .b-section[data-id="scale-ai"] .card-front .card__description,
         .b-section[data-id="scale-ai"] .card-front .card__cta {
-            text-align: left;
-        }
-        
-        /* Make H3 titles heavier on mobile */
-        .b-section[data-id="scale-ai"] .card__title {
-            font-weight: 500;
-        }
-        
-        /* Add subtle flip arrow on mobile */
-        .b-section[data-id="scale-ai"] .card-front::after {
-            content: "⟳";
-            position: absolute;
-            bottom: 2rem;
-            right: 2rem;
-            color: var(--color-accent);
-            font-size: 24px;
-            font-weight: 400;
-            transition: transform 0.3s ease;
-            line-height: 1;
-        }
-        
-        /* Subtle rotation animation on tap */
-        .b-section[data-id="scale-ai"] .b-link:active .card-front::after {
-            transform: rotate(180deg);
-        }
-        
-        /* Remove desktop arrow on mobile */
-        .b-section[data-id="scale-ai"] .card__cta::after {
-            display: none;
-        }
-        
-        /* Disable ALL hover effects on mobile */
-        .b-section[data-id="scale-ai"] .b-link:hover {
-            background: var(--color-gray-100) !important; /* Stay gray */
-            transform: none !important;
-            box-shadow: var(--shadow-md) !important;
-            z-index: 1 !important;
-        }
-        
-        /* Keep gradient state consistent on hover */
-        .b-section[data-id="scale-ai"] .b-link:hover::before {
-            /* Don't change gradient on hover - maintain current state */
-        }
-        
-        /* Ensure back face text is left aligned on mobile */
-        .b-section[data-id="scale-ai"] .card-back .card__description {
-            text-align: left;
-            font-size: 1.5rem; /* 2px smaller than 1.7rem */
-            line-height: 1.5; /* Proper line spacing for readability */
+            text-align: center;
         }
     }
 }
@@ -669,7 +544,6 @@
     /* Marquee track with animation */
     .marquee__track {
         display: flex;
-        align-items: flex-end;                  /* Align all logos by their bottom edge */
         animation: marquee var(--marquee-duration) linear infinite;
         will-change: transform;
         transform: translateZ(0);               /* Hardware acceleration */
@@ -684,6 +558,9 @@
         transition: opacity var(--transition-base);
     }
     
+    .marquee__item:nth-of-type(4n) {
+        margin-inline-end: 0;                   /* No margin after every 4th item */
+    }
     
     .marquee__item:hover {
         opacity: 1;
@@ -735,7 +612,6 @@
     
     .deployment-card h3 {
         font-size: 2.4rem;
-        font-weight: 500;
         margin-block-end: 1.5rem;
         color: var(--color-text-primary);
     }
@@ -748,39 +624,35 @@
     }
 }
 
-/* ===== ENHANCED ANIMATION PLACEHOLDER COMPONENT ===== */
+/* ===== ANIMATION PLACEHOLDER COMPONENT ===== */
 @layer components {
-    /* ENHANCED: Animation placeholder container with professional depth and glass morphism */
+    /* Animation placeholder container - for chatbot demo */
     .animation-placeholder {
         position: relative;
         inline-size: 100%;
         block-size: 100%;
-        min-block-size: 41.6rem;                /* Increased by 3rem (30px) on desktop */
-        max-block-size: 48rem;                  /* Reasonable height to prevent layout issues */
-        /* ENHANCED: Transparent background */
-        background: transparent;
-        /* Backdrop filter removed - handled by chatbot-container */
+        min-block-size: 38.6rem;
+        max-block-size: 48rem;
+        background: 
+            linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.1) 0%,
+                rgba(255, 255, 255, 0.05) 100%
+            );
+        backdrop-filter: blur(14px) saturate(170%);
+        -webkit-backdrop-filter: blur(14px) saturate(170%);
         border-radius: 24px;
-        border: none; /* Remove conflicting border */
-        /* ENHANCED: Professional multi-layer shadow system - DISABLED FOR TESTING */
-        /* TO ROLLBACK: Uncomment the box-shadow below to restore */
-        /*
+        border: 1px solid rgba(0,0,0,0.06);
         box-shadow: 
-            0 8px 20px rgba(0, 0, 0, 0.08),
-            0 0 50px 15px hsla(192, 100%, 70%, 0.07);
-        */
-            /* Removed inner light edge that was creating white outline */
+            0 20px 60px rgba(0, 0, 0, 0.1),
+            inset 0 1px 1px rgba(255, 255, 255, 0.3);
         overflow: hidden;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all var(--transition-slow);
         z-index: 10;
         scrollbar-width: none;                  /* Firefox - hide scrollbar */
         -ms-overflow-style: none;               /* IE and Edge - hide scrollbar */
-        transform: translateZ(0);               /* Force hardware acceleration */
-        will-change: transform, box-shadow;
-        transform-style: preserve-3d;           /* Enable 3D transformations */
     }
     
     /* Chrome, Safari and Opera - hide scrollbar */
@@ -790,47 +662,41 @@
         display: none;
     }
     
-    /* ENHANCED: Subtle gradient overlays - DISABLED to prevent multiple layers */
+    /* Subtle gradient overlays */
     .animation-placeholder::before {
-        display: none; /* Disabled to prevent extra gradient layers */
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: 
+            radial-gradient(
+                circle at 20% 80%,
+                rgba(0, 255, 255, 0.1) 0%,
+                transparent 50%
+            ),
+            radial-gradient(
+                circle at 80% 20%,
+                rgba(255, 0, 136, 0.1) 0%,
+                transparent 50%
+            ),
+            radial-gradient(
+                circle at 50% 50%,
+                rgba(255, 255, 0, 0.05) 0%,
+                transparent 70%
+            );
+        opacity: 0.6;
+        pointer-events: none;
     }
     
-    /* ENHANCED: Subtle glow animation */
-    @keyframes placeholderGlow {
-        0% { opacity: 0.7; }
-        100% { opacity: 0.4; }
-    }
-    
-    /* ENHANCED: Noise texture - DISABLED to prevent multiple layers */
-    .animation-placeholder::after {
-        display: none; /* Disabled to prevent extra texture layers */
-    }
-    
-    /* ENHANCED: Professional hover state with 3D lift - DISABLED FOR TESTING */
-    /* TO ROLLBACK: Uncomment to restore hover effect */
-    /*
     .animation-placeholder:hover {
         transform: translateY(-5px);
-        box-shadow: var(--shadow-xl);
+        box-shadow: 
+            0 30px 80px rgba(0, 0, 0, 0.15),
+            inset 0 1px 1px rgba(255, 255, 255, 0.3);
     }
-    */
-    
-    /* ENHANCED: Active state for click feedback - DISABLED FOR TESTING */
-    /* TO ROLLBACK: Uncomment to restore active state */
-    /*
-    .animation-placeholder:active {
-        transform: translateY(-2px);
-        transition-duration: 0.1s;
-    }
-    */
     
     @media (width <= 768px) {
         .animation-placeholder {
-            block-size: 32rem;                    /* Reverted to original mobile height */
-            min-block-size: 32rem;                /* Reverted to original mobile min-height */
-            /* Reduce glass blur on mobile for performance */
-            backdrop-filter: blur(14px) saturate(170%);
-            -webkit-backdrop-filter: blur(14px) saturate(170%);
+            min-block-size: 28.6rem;
         }
     }
     
@@ -857,35 +723,12 @@
         -webkit-backdrop-filter: blur(14px) saturate(170%);
     }
     
-    /* ENHANCED: Chatbot active state with breathing effect */
+    /* Chatbot active state */
     .animation-placeholder.chat-active {
-        /* animation: placeholderBreathing 4s ease-in-out infinite; DISABLED - causes circular movement */
-    }
-    
-    /* ENHANCED: Subtle breathing animation */
-    @keyframes placeholderBreathing {
-        0%, 100% {
-            box-shadow: 
-                0 2px 4px rgba(0, 0, 0, 0.03),
-                0 12px 24px rgba(0, 0, 0, 0.08),
-                0 40px 80px rgba(0, 0, 0, 0.1),
-                0 0 0 0 rgba(255, 0, 136, 0),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.6),
-                inset 0 1px 2px rgba(255, 255, 255, 0.8),
-                inset 0 -1px 1px rgba(0, 0, 0, 0.04);
-            transform: scale(1) translateZ(0);
-        }
-        50% {
-            box-shadow: 
-                0 2px 4px rgba(0, 0, 0, 0.03),
-                0 12px 24px rgba(0, 0, 0, 0.08),
-                0 40px 80px rgba(0, 0, 0, 0.1),
-                0 0 30px 10px rgba(255, 0, 136, 0.05),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.6),
-                inset 0 1px 2px rgba(255, 255, 255, 0.8),
-                inset 0 -1px 1px rgba(0, 0, 0, 0.04);
-            transform: scale(1.005) translateZ(5px);
-        }
+        box-shadow: 
+            0 25px 70px rgba(0, 0, 0, 0.12),
+            inset 0 1px 1px rgba(255, 255, 255, 0.4),
+            0 0 40px rgba(127, 255, 255, 0.1);
     }
 }
 

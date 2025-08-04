@@ -25,6 +25,10 @@
  * Manages carousel navigation and card flip functionality
  */
 class ScaleAICarousel {
+    // WeakMaps to track event handlers for proper cleanup
+    cardClickHandlers = new WeakMap();
+    cardKeydownHandlers = new WeakMap();
+    
     constructor() {
         // Find carousel container
         this.carousel = document.querySelector('.scale-ai-carousel');
@@ -177,28 +181,41 @@ class ScaleAICarousel {
      * Desktop: 3D flip animations, Mobile: Simple show/hide
      */
     initCardFlips() {
-        // Only enable card flips on desktop
-        if (!this.isDesktop) {
-            console.log('Mobile detected - card flips disabled');
-            return;
-        }
-        
         const cards = this.carousel.querySelectorAll('.b-link');
+        const isMobile = window.innerWidth <= 768;
         
         cards.forEach((card, index) => {
-            // Handle clicks on the entire card
-            card.addEventListener('click', (e) => {
+            // Remove existing listeners if any
+            const existingClickHandler = this.cardClickHandlers.get(card);
+            const existingKeydownHandler = this.cardKeydownHandlers.get(card);
+            
+            if (existingClickHandler) {
+                card.removeEventListener('click', existingClickHandler);
+            }
+            if (existingKeydownHandler) {
+                card.removeEventListener('keydown', existingKeydownHandler);
+            }
+            
+            // Gradient visibility is controlled via CSS using data-gradient attribute and flipped state
+            
+            // Create new handlers
+            const clickHandler = (e) => {
                 e.preventDefault(); // Prevent default link behavior
                 this.toggleCardFlip(card, index);
-            });
+            };
             
-            // Handle keyboard navigation for card flips
-            card.addEventListener('keydown', (e) => {
+            const keydownHandler = (e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     this.toggleCardFlip(card, index);
                 }
-            });
+            };
+            
+            // Store and add handlers
+            this.cardClickHandlers.set(card, clickHandler);
+            this.cardKeydownHandlers.set(card, keydownHandler);
+            card.addEventListener('click', clickHandler);
+            card.addEventListener('keydown', keydownHandler);
             
             // Add proper accessibility attributes
             card.setAttribute('role', 'button');
@@ -223,12 +240,18 @@ class ScaleAICarousel {
             card.classList.remove('flipped');
             card.setAttribute('aria-pressed', 'false');
             card.setAttribute('aria-label', `Card ${index + 1}: Click to flip and see more details`);
+            
+            // Gradient visibility controlled by CSS based on flipped state and data-gradient attribute
+            
             console.log(`Card ${index + 1} flipped to front`);
         } else {
             // Flip to back
             card.classList.add('flipped');
             card.setAttribute('aria-pressed', 'true');
             card.setAttribute('aria-label', `Card ${index + 1}: Click to flip back to summary`);
+            
+            // Gradient will hide automatically via CSS when flipped
+            
             console.log(`Card ${index + 1} flipped to back`);
         }
         
@@ -333,6 +356,12 @@ class ScaleAICarousel {
                 console.log('Switching to desktop view');
                 this.resetToDesktop();
             }
+            // Even if staying on same view, reinitialize to fix any issues
+            else if (this.isDesktop) {
+                console.log('Refreshing desktop view after resize');
+                // Remove and re-add flip functionality to ensure it works
+                this.initCardFlips();
+            }
         }, 250);
         
         window.addEventListener('resize', handleResize, { passive: true });
@@ -342,14 +371,30 @@ class ScaleAICarousel {
      * Reset carousel for mobile view
      */
     resetToMobile() {
-        // Remove all flip states
+        // Remove all flip states and set gradient visibility
         const cards = this.carousel.querySelectorAll('.b-link');
         cards.forEach((card) => {
+            // Remove event listeners
+            const clickHandler = this.cardClickHandlers.get(card);
+            const keydownHandler = this.cardKeydownHandlers.get(card);
+            
+            if (clickHandler) {
+                card.removeEventListener('click', clickHandler);
+                this.cardClickHandlers.delete(card);
+            }
+            if (keydownHandler) {
+                card.removeEventListener('keydown', keydownHandler);
+                this.cardKeydownHandlers.delete(card);
+            }
+            
             card.classList.remove('flipped');
             card.removeAttribute('role');
             card.removeAttribute('tabindex');
             card.removeAttribute('aria-pressed');
             card.removeAttribute('aria-label');
+            // Set data attribute to ensure gradient is visible on mobile
+            // CSS uses [data-gradient="show"] to control opacity
+            card.setAttribute('data-gradient', 'show');
         });
         
         console.log('Carousel reset for mobile view');
@@ -359,8 +404,18 @@ class ScaleAICarousel {
      * Reset carousel for desktop view
      */
     resetToDesktop() {
-        // Re-initialize card flips
+        // Reset all cards to unflipped state first
+        const cards = this.carousel.querySelectorAll('.b-link');
+        cards.forEach((card) => {
+            card.classList.remove('flipped');
+            card.setAttribute('aria-pressed', 'false');
+        });
+        
+        // Re-initialize card flips to ensure event listeners are properly attached
         this.initCardFlips();
+        
+        // Reset carousel to first slide
+        this.goToSlide(0);
         
         console.log('Carousel reset for desktop view');
     }
@@ -402,6 +457,19 @@ class ScaleAICarousel {
         // Reset all card states
         const cards = this.carousel.querySelectorAll('.b-link');
         cards.forEach((card) => {
+            // Remove event listeners
+            const clickHandler = this.cardClickHandlers.get(card);
+            const keydownHandler = this.cardKeydownHandlers.get(card);
+            
+            if (clickHandler) {
+                card.removeEventListener('click', clickHandler);
+                this.cardClickHandlers.delete(card);
+            }
+            if (keydownHandler) {
+                card.removeEventListener('keydown', keydownHandler);
+                this.cardKeydownHandlers.delete(card);
+            }
+            
             card.classList.remove('flipped');
             card.removeAttribute('role');
             card.removeAttribute('tabindex');
