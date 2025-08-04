@@ -34,6 +34,7 @@
     *::before,
     *::after {
         box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent; /* Remove tap highlight globally */
     }
 
     * {
@@ -49,7 +50,7 @@
     /* Suisse Screen Regular - Primary body weight */
     @font-face {
         font-family: 'Suisse Screen';
-        src: url('/fonts/SuisseScreen-Regular.woff2') format('woff2');
+        src: url('../fonts/SuisseScreen-Regular.woff2') format('woff2');
         font-weight: 400;
         font-style: normal;
         font-display: swap; /* Improved loading performance */
@@ -58,17 +59,35 @@
     /* Suisse Screen Medium - Emphasis weight */
     @font-face {
         font-family: 'Suisse Screen';
-        src: url('/fonts/SuisseScreen-Medium.woff2') format('woff2');
+        src: url('../fonts/SuisseScreen-Medium.woff2') format('woff2');
         font-weight: 500;
         font-style: normal;
         font-display: swap;
     }
     
-    /* Suisse Screen Light - Mapped to 600 for design consistency */
+    /* Suisse Screen SemiBold - True 600 weight */
     @font-face {
         font-family: 'Suisse Screen';
-        src: url('/fonts/SuisseScreen-Light.woff2') format('woff2');
+        src: url('../fonts/SuisseScreen-SemiBold.woff2') format('woff2');
         font-weight: 600;
+        font-style: normal;
+        font-display: swap;
+    }
+    
+    /* Suisse Screen Light - Light weight */
+    @font-face {
+        font-family: 'Suisse Screen';
+        src: url('../fonts/SuisseScreen-Light.woff2') format('woff2');
+        font-weight: 300;
+        font-style: normal;
+        font-display: swap;
+    }
+    
+    /* Suisse Screen Bold - Bold weight */
+    @font-face {
+        font-family: 'Suisse Screen';
+        src: url('../fonts/SuisseScreen-Bold.woff2') format('woff2');
+        font-weight: 700;
         font-style: normal;
         font-display: swap;
     }
@@ -76,7 +95,7 @@
     /* Suisse Screen Monitor - Lighter display weight */
     @font-face {
         font-family: 'Suisse Screen';
-        src: url('/fonts/SuisseScreen-Monitor.woff2') format('woff2');
+        src: url('../fonts/SuisseScreen-Monitor.woff2') format('woff2');
         font-weight: 350;
         font-style: normal;
         font-display: swap;
@@ -86,7 +105,7 @@
     
     @font-face {
         font-family: 'Suisse Screen';
-        src: url('/fonts/SuisseScreen-RegularItalic.woff2') format('woff2');
+        src: url('../fonts/SuisseScreen-RegularItalic.woff2') format('woff2');
         font-weight: 400;
         font-style: italic;
         font-display: swap;
@@ -94,7 +113,7 @@
     
     @font-face {
         font-family: 'Suisse Screen';
-        src: url('/fonts/SuisseScreen-MediumItalic.woff2') format('woff2');
+        src: url('../fonts/SuisseScreen-MediumItalic.woff2') format('woff2');
         font-weight: 500;
         font-style: italic;
         font-display: swap;
@@ -102,7 +121,7 @@
     
     @font-face {
         font-family: 'Suisse Screen';
-        src: url('/fonts/SuisseScreen-SemiBoldItalic.woff2') format('woff2');
+        src: url('../fonts/SuisseScreen-SemiBoldItalic.woff2') format('woff2');
         font-weight: 600;
         font-style: italic;
         font-display: swap;
@@ -110,7 +129,7 @@
     
     @font-face {
         font-family: 'Suisse Screen';
-        src: url('/fonts/SuisseScreen-MonitorItalic.woff2') format('woff2');
+        src: url('../fonts/SuisseScreen-MonitorItalic.woff2') format('woff2');
         font-weight: 350;
         font-style: italic;
         font-display: swap;
@@ -120,7 +139,7 @@
     
     @font-face {
         font-family: 'Suisse Intl';
-        src: url('/fonts/SuisseIntl-Regular.woff2') format('woff2');
+        src: url('../fonts/SuisseIntl-Regular.woff2') format('woff2');
         font-weight: 400;
         font-style: normal;
         font-display: swap;
@@ -128,7 +147,7 @@
     
     @font-face {
         font-family: 'Suisse Intl';
-        src: url('/fonts/SuisseIntl-Medium.woff2') format('woff2');
+        src: url('../fonts/SuisseIntl-Medium.woff2') format('woff2');
         font-weight: 500;
         font-style: normal;
         font-display: swap;
@@ -136,7 +155,7 @@
     
     @font-face {
         font-family: 'Suisse Intl';
-        src: url('/fonts/SuisseIntl-Bold.woff2') format('woff2');
+        src: url('../fonts/SuisseIntl-Bold.woff2') format('woff2');
         font-weight: 700;
         font-style: normal;
         font-display: swap;
@@ -146,7 +165,7 @@
     
     @font-face {
         font-family: 'Suisse Intl Mono';
-        src: url('/fonts/suisse-intl-mono.woff2') format('woff2');
+        src: url('../fonts/suisse-intl-mono.woff2') format('woff2');
         font-weight: 400;
         font-style: normal;
         font-display: swap;

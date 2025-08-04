@@ -26,55 +26,21 @@
  * Called on: page load, window resize
  */
 function fixMarquee() {
+    // DISABLED: Using pure CSS animation for better performance
+    // The JavaScript calculation was causing gaps and stutter
+    // CSS handles the 50% transform seamlessly
+    
     const track = document.querySelector('.marquee__track');
-    const items = document.querySelectorAll('.marquee__item');
-    
-    // Early return if elements don't exist
-    if (!track || items.length < 4) {
-        console.warn('Marquee elements not found or insufficient items');
-        return;
-    }
-    
-    try {
-        // Measure the exact width of the first 4 items (one complete set)
-        let firstSetWidth = 0;
-        for (let i = 0; i < 4; i++) {
-            const itemRect = items[i].getBoundingClientRect();
-            firstSetWidth += itemRect.width;
-            
-            // Add margin except for the 4th item (following CSS pattern)
-            if (i < 3) {
-                const computedStyle = getComputedStyle(items[i]);
-                firstSetWidth += parseFloat(computedStyle.marginRight);
-            }
-        }
+    if (track) {
+        // Remove any existing inline styles
+        track.style.animation = '';
         
-        // Remove existing marquee keyframes if they exist
+        // Remove any dynamically created keyframes
         const existingStyle = document.getElementById('marquee-keyframes');
         if (existingStyle) existingStyle.remove();
-        
-        // Create precise keyframe animation
-        const keyframeName = 'marquee-precise';
-        const style = document.createElement('style');
-        style.id = 'marquee-keyframes';
-        style.textContent = `
-            @keyframes ${keyframeName} {
-                0% { transform: translateX(0); }
-                100% { transform: translateX(-${firstSetWidth}px); }
-            }
-        `;
-        document.head.appendChild(style);
-        
-        // Apply the animation with 60-second duration
-        track.style.animation = `${keyframeName} 60s linear infinite`;
-        
-        console.log(`Marquee fixed: ${firstSetWidth}px width, ${keyframeName} animation applied`);
-        
-    } catch (error) {
-        console.error('Error fixing marquee:', error);
-        // Fallback to CSS-only animation if JavaScript fails
-        track.style.animation = 'marquee 60s linear infinite';
     }
+    
+    return; // Exit early - let CSS handle the animation
 }
 
 /**
@@ -225,17 +191,29 @@ function safeEventListener(element, event, handler, options = {}) {
  * Sets up initial marquee fix and resize handlers
  */
 function initUtilities() {
-    // Fix marquee after images load for accurate measurements
+    // Fix marquee after images load for accurate measurements - only if marquee exists
+    const checkAndFixMarquee = () => {
+        const marqueeTrack = document.querySelector('.marquee__track');
+        if (marqueeTrack) {
+            setTimeout(fixMarquee, 100);
+        }
+    };
+    
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
-            window.addEventListener('load', fixMarquee);
+            window.addEventListener('load', checkAndFixMarquee);
         });
     } else {
-        window.addEventListener('load', fixMarquee);
+        window.addEventListener('load', checkAndFixMarquee);
     }
     
-    // Re-fix marquee on resize (debounced for performance)
-    const debouncedMarqueeFix = debounce(fixMarquee, 250);
+    // Re-fix marquee on resize (debounced for performance) - only if marquee exists
+    const debouncedMarqueeFix = debounce(() => {
+        const marqueeTrack = document.querySelector('.marquee__track');
+        if (marqueeTrack) {
+            fixMarquee();
+        }
+    }, 250);
     safeEventListener(window, 'resize', debouncedMarqueeFix, { passive: true });
     
     // Set up smooth scroll for all anchor links

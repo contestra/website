@@ -1,0 +1,1991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let's Talk - Spectrum AI</title>
+    <!-- Updated: Mobile menu redesigned to match AI21 dropdown style -->
+    <!-- Version: 2025-08-02 - Mobile improvements:
+         - Fixed gradient bars resizing on scroll (changed from position:fixed to absolute)
+         - Form fields maintain 2-column layout on mobile
+         - Submit button right-aligned on mobile
+         - Professional dropdown menu with CTA section
+         - Removed gradient strip from footer
+    -->
+    
+    <!-- Font Preloads for Performance -->
+    <link rel="preload" href="fonts/SuisseScreen-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/SuisseScreen-Medium.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/SuisseScreen-Light.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="fonts/SuisseIntl-Bold.woff2" as="font" type="font/woff2" crossorigin>
+    
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="main.css">
+    
+    <!-- Navigation adjustments for single menu item -->
+    <style>
+        /* Navigation adjustments for single menu item */
+        .header__in {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .main-navigation {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        /* Keep logo on the left */
+        .site-logo {
+            margin-right: auto;
+        }
+
+        /* Group pricing and CTA together on the right */
+        .main-menu-wrap {
+            display: flex;
+            align-items: center;
+            margin-right: 2rem;
+            margin-left: auto;
+            justify-content: flex-end;
+            flex: none;
+        }
+
+        .main-menu {
+            justify-content: flex-end;
+        }
+
+        .header__options {
+            margin-left: 0;
+        }
+        
+        /* Mobile Menu Styles - REMOVED to avoid duplication with css/02-layout.css */
+        /* 
+         * ROLLBACK NOTES - Talk Page Mobile Menu Customizations
+         * =====================================================
+         * 
+         * The mobile menu button styles were removed because they duplicate styles
+         * already defined in css/02-layout.css (lines 283-327).
+         * 
+         * However, this page had some specific differences that may have been intentional:
+         * 
+         * 1. FIXED SIZE: Talk page used fixed 24px width/height
+         *    Main CSS uses: no fixed size, relies on padding
+         *    
+         * 2. Z-INDEX: Talk page used z-index: 1002
+         *    Main CSS uses: no z-index on button itself
+         *    
+         * 3. SPAN POSITIONING: Talk page used absolute positioning with specific top values
+         *    Main CSS uses: relative positioning with margins
+         *    
+         * 4. BORDER: Talk page had border: none
+         *    Main CSS has: border: 1px solid rgba(0,0,0,0.06)
+         * 
+         * TO RESTORE TALK-SPECIFIC STYLES:
+         * ================================
+         * Option 1: Add a modifier class in THIS file:
+         * 
+         * .talk-page .mobile-menu-btn {
+         *     width: 24px;
+         *     height: 24px;
+         *     z-index: 1002;
+         *     border: none;
+         * }
+         * 
+         * Option 2: Restore the full block below:
+         * 
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            cursor: pointer;
+            position: relative;
+            width: 24px;
+            height: 24px;
+            z-index: 1002;
+        }
+        
+        .mobile-menu-btn span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: #111827;
+            margin: 5px 0;
+            transition: all 0.3s ease;
+            position: absolute;
+            left: 0;
+        }
+        
+        .mobile-menu-btn span:nth-child(1) {
+            top: 0;
+        }
+        
+        .mobile-menu-btn span:nth-child(2) {
+            top: 11px;
+        }
+        
+        .mobile-menu-btn span:nth-child(3) {
+            top: 22px;
+        }
+        
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg);
+            top: 11px;
+        }
+        
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg);
+            top: 11px;
+        }
+        */
+        
+        /* Mobile menu CSS moved to 02-layout.css */
+        
+        /* Body scroll prevention moved to 02-layout.css */
+        
+        /* Mobile responsive styles */
+        @media (width <= 768px) {
+            .main-menu-wrap,
+            .header__options {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+                margin-left: auto;
+            }
+            
+            
+            /* Ensure header stays on top */
+            #site-header {
+                z-index: 1001;
+            }
+            
+            /* Prevent overflow when menu is open */
+            body.menu-open {
+                overflow: hidden;
+                width: 100vw;
+                position: fixed;
+            }
+        }
+    </style>
+    
+    <!-- Contact Page Specific Styles -->
+    <style>
+        /* Page layout setup */
+        html {
+            height: 100%;
+        }
+        
+        body {
+            background: #ffffff;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Page wrapper to contain gradient and content */
+        .page-wrapper {
+            flex: 1;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Two-column layout */
+        .contact-hero {
+            flex: 1; /* Take up remaining space */
+            padding-top: var(--nav-height);
+            font-family: 'Suisse Screen', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin-bottom: 0; /* Remove any gap with footer */
+        }
+        
+        /* Container with standard padding */
+        .contact-hero__wrapper {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 var(--container-padding);
+            display: grid;
+            grid-template-columns: minmax(min-content, 1fr) minmax(min-content, 1fr);
+            gap: 8rem; /* FIXED 2025-08-01: Proper gap between content and gradient sections */
+            min-height: 100%;
+            align-items: stretch;
+            padding-bottom: 0; /* Remove padding to let gradient bars touch footer */
+        }
+        
+        /* Left side - content */
+        .contact-hero__left {
+            padding-right: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+            min-width: 350px; /* Prevent text from getting too narrow */
+        }
+        
+        /* Right side - form area */
+        .contact-hero__right {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem;
+            min-height: calc(100vh - var(--nav-height));
+            align-self: stretch;
+            /* Gradient background directly on this element */
+            background: linear-gradient(to right, 
+                #bfffff 0%,      /* Pastel cyan */
+                #bfffe1 16.66%,  /* Pastel turquoise */
+                #e1ffbf 33.33%,  /* Pastel lime */
+                #ffffbf 50%,     /* Pastel yellow */
+                #ffe1bf 66.66%,  /* Pastel orange */
+                #ffbfe1 83.33%,  /* Pastel pink */
+                #ffbfd0 100%     /* Pastel rose */
+            );
+        }
+        
+        
+        /* Colored bars at the bottom - positioned inside right column */
+        .contact-hero__right::after {
+            content: '';
+            position: absolute;
+            bottom: -1px; /* Overlap footer by 1px to prevent gap */
+            left: 0;
+            right: 0;
+            height: 400px; /* Increased from 150px to reach higher */
+            background: linear-gradient(to right,
+                #00ffff 0% 14.3%,
+                #00ff88 14.3% 28.6%,
+                #88ff00 28.6% 42.9%,
+                #ffff00 42.9% 57.2%,
+                #ff8800 57.2% 71.5%,
+                #ff0088 71.5% 85.8%,
+                #ff0044 85.8% 100%
+            );
+            z-index: 0;
+        }
+        
+        
+        .contact-hero__title {
+            font-size: clamp(3.5rem, 5vw, 6rem);
+            line-height: 1.1;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-block-end: 2rem;
+            color: #111827;
+        }
+        
+        .contact-hero__subtitle {
+            font-size: 1.8rem;
+            line-height: 1.5;
+            color: #6b7280;
+            margin-block-end: 3rem;
+            max-width: 45ch;
+        }
+        
+        /* Value props styling */
+        .value-props {
+            display: flex;
+            flex-direction: column;
+            gap: 2.4rem;
+            margin-block-end: 2.5rem; /* Reduced from 3rem */
+        }
+        
+        .value-prop {
+            display: flex;
+            align-items: flex-start;
+            gap: 1.6rem;
+        }
+        
+        .value-prop__icon {
+            flex-shrink: 0;
+            inline-size: 2rem;
+            block-size: 2rem;
+            background: var(--color-accent);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-block-start: 0.25rem;
+        }
+        
+        .value-prop__icon svg {
+            inline-size: 1.2rem;
+            block-size: 1.2rem;
+            color: white;
+            fill: currentColor;
+        }
+        
+        .value-prop__text {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            color: #374151;
+        }
+        
+        /* Form container styling */
+        .form-container {
+            position: relative;
+            z-index: 10; /* Ensure it's above the gradient */
+            max-inline-size: 48rem;
+            width: 100%;
+            background: #FEFEFE;
+            padding: 3.5rem 4rem;
+            border-radius: 12px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .form-title {
+            font-size: 2.8rem;
+            font-weight: 400;
+            margin-block-end: 3rem;
+            text-align: left;
+            color: #111827;
+            letter-spacing: -0.01em;
+        }
+        
+        .form-grid {
+            display: grid;
+            gap: 2rem;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        
+        /* Floating label styles */
+        .form-group {
+            position: relative;
+        }
+        
+        .form-label {
+            position: absolute;
+            left: 0;
+            top: 0.4rem;
+            font-size: 1.6rem;
+            font-family: 'Suisse Screen', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 400;
+            color: #6b7280;
+            pointer-events: none;
+            transition: all 0.2s ease;
+            transform-origin: left top;
+        }
+        
+        /* Hide label when input has value */
+        .form-input:not(:placeholder-shown) + .form-label,
+        .form-textarea:not(:placeholder-shown) + .form-label {
+            opacity: 0;
+            transform: translateY(-1.5rem) scale(0.75);
+        }
+        
+        /* Special handling for select - show label only when no value selected */
+        .form-group:has(.form-select) .form-label {
+            transform: none;
+            color: #6b7280;
+            opacity: 1;
+            font-size: 1.6rem;
+            font-family: 'Suisse Screen', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 400;
+            top: 0.4rem;
+            left: 0;
+            transition: all 0.2s ease;
+        }
+        
+        /* Fly away effect when country is selected */
+        .form-group:has(.form-select.has-value) .form-label,
+        .form-group.has-value .form-label {
+            opacity: 0;
+            transform: translateY(-1.5rem) scale(0.75);
+        }
+        
+        .form-select:focus + .form-label {
+            color: var(--color-accent);
+        }
+        
+        /* Keep label visible on focus if no value */
+        .form-input:focus:placeholder-shown + .form-label,
+        .form-textarea:focus:placeholder-shown + .form-label {
+            color: var(--color-accent);
+        }
+        
+        .form-input,
+        .form-select,
+        .form-textarea {
+            padding: 0.4rem 0;
+            border: none;
+            border-bottom: 1px solid #d1d5db;
+            border-radius: 0;
+            font-size: 1.6rem;
+            font-family: 'Suisse Screen', -apple-system, BlinkMacSystemFont, sans-serif;
+            transition: border-color 0.2s;
+            background: transparent;
+            width: 100%;
+        }
+        
+        /* Remove extra top padding for select */
+        .form-select {
+            padding-top: 0.4rem;
+        }
+        
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-bottom-color: var(--color-accent);
+        }
+        
+        .form-textarea {
+            min-block-size: 5rem;
+            resize: none;
+        }
+        
+        .form-checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--gap-2);
+        }
+        
+        .form-checkbox {
+            margin-block-start: 0.3rem;
+            inline-size: 1.8rem;
+            block-size: 1.8rem;
+            cursor: pointer;
+            accent-color: var(--color-accent);
+        }
+        
+        /* Select dropdown styling */
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+            background-position: right center;
+            background-repeat: no-repeat;
+            background-size: 1.5rem;
+            padding-right: 2rem;
+            cursor: pointer;
+        }
+        
+        .form-checkbox-label a {
+            color: var(--color-accent);
+            text-decoration: none;
+        }
+        
+        .form-checkbox-label a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Form footer with privacy and submit */
+        .form-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-block-start: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .form-privacy {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            color: #6b7280;
+            white-space: nowrap;
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+        
+        .form-footer .btn {
+            flex-shrink: 0;
+        }
+        
+        .form-privacy a {
+            color: var(--color-accent);
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        
+        /* Email validation error messages */
+        .email-error-message {
+            font-size: 1.3rem;
+            color: #B8256F;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        .email-error-message:not(:empty) {
+            display: block;
+        }
+        
+        .form-input.input-error {
+            border-bottom-color: #B8256F;
+        }
+        
+        .form-input.input-success,
+        .form-textarea.input-success,
+        .form-select.input-success {
+            border-bottom-color: #2D8A2D;
+        }
+        
+        /* Form submission states */
+        .form-loading,
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+        
+        .form-container.is-loading .contact-form,
+        .form-container.is-loading .form-title {
+            display: none;
+        }
+        
+        .form-container.is-loading .form-loading {
+            display: block;
+        }
+        
+        .form-container.is-success .contact-form,
+        .form-container.is-success .form-title,
+        .form-container.is-success .form-loading {
+            display: none;
+        }
+        
+        .form-container.is-success .form-success {
+            display: block;
+        }
+        
+        /* Loading spinner */
+        .loading-spinner {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid var(--color-accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1.5rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loading-text {
+            font-size: 1.8rem;
+            color: #6b7280;
+        }
+        
+        /* Success checkmark */
+        .success-checkmark {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+        
+        .success-circle {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 2;
+            stroke-miterlimit: 10;
+            stroke: #2D8A2D;
+            fill: none;
+            animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+        
+        .success-check {
+            transform-origin: 50% 50%;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            stroke: #2D8A2D;
+            fill: none;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.6s forwards;
+        }
+        
+        @keyframes stroke {
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+        
+        .success-title {
+            font-size: 2.4rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 1.5rem;
+        }
+        
+        .success-message {
+            font-size: 1.6rem;
+            line-height: 1.6;
+            color: #6b7280;
+            max-width: 40rem;
+            margin: 0 auto;
+        }
+        
+        .success-message a {
+            color: var(--color-accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .success-message a:hover {
+            text-decoration: underline;
+        }
+
+        /* Error state styles */
+        .form-error {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 20;
+        }
+        
+        .form-container.is-error .form-error {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .error-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 2rem;
+        }
+        
+        .error-circle {
+            stroke: #ef4444;
+            stroke-width: 2;
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            fill: none;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+        
+        .error-x {
+            stroke: #ef4444;
+            stroke-width: 3;
+            stroke-linecap: round;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            fill: none;
+            animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.3s forwards;
+        }
+        
+        .error-title {
+            font-size: 2.4rem;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 1.5rem;
+        }
+        
+        .error-message {
+            font-size: 1.6rem;
+            line-height: 1.6;
+            color: #6b7280;
+            max-width: 40rem;
+            margin: 0 auto;
+        }
+        
+        .error-message a {
+            color: var(--color-accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .error-message a:hover {
+            text-decoration: underline;
+        }
+        
+        
+        /* Trusted partners section */
+        .trusted-partners {
+            margin-block-start: 0; /* Removed top margin - gap handled by value-props */
+            max-width: 100%;
+            overflow: hidden;
+        }
+        
+        .trusted-partners-title {
+            font-size: 1.5rem;
+            color: #6b7280;
+            margin-block-end: 2.4rem;
+        }
+        
+        /* Logo row -------------------------------------------------------------- */
+        .partner-logos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;                             /* Tighter gap between logos */
+            align-items: flex-end;                 /* ⬅️ bottom-edge alignment */
+        }
+        
+        /* Cell: can shrink to 4.5 rem, grow to 9 rem ------------------------ */
+        .logo-cell {
+            flex: 0 1 clamp(4.5rem, 7vw, 9rem);
+            block-size: 3.5rem;                    /* same visual height */
+            display: flex;
+            justify-content: flex-start;           /* Left align logos */
+            align-items: flex-end;                 /* ⬅️ push img to the bottom */
+        }
+        
+        /* First logo cell needs no offset to align with "Core" text */
+        .logo-cell:first-child {
+            margin-left: 0;
+        }
+        
+        /* The real artwork --------------------------------------------- */
+        .logo-cell img {
+            max-block-size: 100%;                  /* never exceed 3.5 rem height */
+            max-inline-size: 85%;                  /* keep word-marks in check */
+            min-inline-size: 3rem;                 /* ⬅️ give tall icons a floor */
+            object-fit: contain;
+            filter: brightness(0) saturate(100%) invert(33%) sepia(6%)
+                   saturate(509%) hue-rotate(201deg) brightness(96%) contrast(89%);
+        }
+        
+        
+        
+        /* Transition zone - prevent form spillage at breakpoint */
+        @media (width > 768px) and (width <= 900px) {
+            .contact-hero__right {
+                padding: 1rem;
+            }
+            
+            .form-container {
+                max-inline-size: 40rem; /* Slightly smaller at this range */
+                padding: 3rem 3rem;
+            }
+        }
+        
+        /* Prevent logo wrapping at narrow desktop widths */
+        @media (width > 768px) and (width <= 1200px) {
+            .partner-logos {
+                gap: 0.75rem; /* Slightly reduce gap to create more space */
+            }
+            
+            .logo-cell {
+                flex: 0 0 auto; /* Don't allow shrinking */
+                width: calc((100% - 3rem) / 5); /* Divide available space by 5 logos, accounting for gaps */
+                min-width: 3.5rem; /* Absolute minimum */
+            }
+            
+            .logo-cell img {
+                max-inline-size: 100%; /* Allow logos to use full cell width */
+                min-inline-size: 2rem; /* Smaller minimum */
+            }
+        }
+        
+        /* Desktop form wrapper */
+        .desktop-form-wrapper {
+            /* Desktop form stays in right column */
+        }
+        
+        /* Mobile form section - hidden on desktop */
+        .mobile-form-section {
+            display: none;
+        }
+        
+        /* Show/hide forms based on viewport */
+        @media (width <= 768px) {
+            .desktop-form-wrapper {
+                display: none; /* Hide desktop form on mobile */
+            }
+            
+            .mobile-form-section {
+                display: block; /* Show mobile form */
+                padding: 2rem 1.5rem; /* Match container padding */
+                position: relative;
+                z-index: 1; /* Above gradient bars */
+                background: transparent; /* Form sits on page background */
+                max-width: 100vw; /* Prevent overflow */
+                overflow: hidden; /* Prevent any scroll */
+                min-height: auto; /* Don't force height */
+            }
+        }
+        
+        /* Mobile adjustments */
+        @media (width <= 768px) {
+            .contact-hero {
+                padding-top: calc(var(--nav-height) + 4rem); /* Match privacy page spacing */
+                min-height: auto; /* Don't force full viewport height on mobile */
+                height: auto;
+            }
+            
+            .contact-hero__wrapper {
+                grid-template-columns: 1fr;
+                gap: 0; /* No gap - sections flow naturally */
+                padding: 0; /* Remove all padding for full bleed */
+                padding-bottom: 0; /* Remove padding to let gradient bars touch footer */
+                display: block; /* Change to block for mobile */
+                position: relative;
+            }
+            
+            .contact-hero__left {
+                padding: 2rem 1.5rem; /* Match container mobile padding */
+                position: relative; /* Ensure it's above gradient */
+                z-index: 1;
+            }
+            
+            .contact-hero__right {
+                display: none; /* Hide the desktop gradient container on mobile */
+            }
+            
+            /* Create a new fixed gradient background for mobile */
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: linear-gradient(to right, 
+                    #bfffff 0%,      /* Pastel cyan */
+                    #bfffe1 16.66%,  /* Pastel turquoise */
+                    #e1ffbf 33.33%,  /* Pastel lime */
+                    #ffffbf 50%,     /* Pastel yellow */
+                    #ffe1bf 66.66%,  /* Pastel orange */
+                    #ffbfe1 83.33%,  /* Pastel pink */
+                    #ffbfbf 100%     /* Pastel red */
+                );
+                z-index: -2;
+                pointer-events: none;
+            }
+            
+            /* Mobile gradient bars - extend from form to footer */
+            .mobile-form-section {
+                position: relative;
+            }
+            
+            /* Mobile gradient bars - start from form section */
+            .mobile-form-section::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: -400px; /* Extend 400px below the section to match desktop gradient height */
+                background: linear-gradient(to right,
+                    #00ffff 0% 14.3%,
+                    #00ff88 14.3% 28.6%,
+                    #88ff00 28.6% 42.9%,
+                    #ffff00 42.9% 57.2%,
+                    #ff8800 57.2% 71.5%,
+                    #ff0088 71.5% 85.8%,
+                    #ff0044 85.8% 100%
+                );
+                z-index: -1;
+                pointer-events: none;
+            }
+            
+            .contact-hero__title {
+                font-size: 3.2rem; /* Increased from 2.8rem */
+                font-weight: 400; /* Increased from 300 for better readability */
+                text-align: left;
+                margin-block-end: 1.5rem;
+            }
+            
+            .contact-hero__subtitle {
+                font-size: 1.8rem; /* Increased to 18px */
+                line-height: 1.5; /* Proper line height for readability */
+                text-align: left;
+                margin-block-end: 2rem;
+            }
+            
+            .value-props {
+                align-items: flex-start;
+                gap: 1.8rem; /* Tighter spacing */
+                margin-block-end: 1.5rem; /* Reduced from 2rem */
+            }
+            
+            .value-prop {
+                max-width: none;
+                gap: 1.2rem;
+            }
+            
+            .value-prop__text {
+                font-size: 1.6rem; /* Increased by 2px from 14px to 16px */
+                line-height: 1.5;
+            }
+            
+            .trusted-partners {
+                text-align: left;
+                margin-block-start: 0; /* No top margin on mobile either */
+            }
+            
+            .trusted-partners-title {
+                font-size: 1.8rem; /* Increased to 18px to match subtitle */
+                line-height: 1.5; /* Match subtitle line height */
+                margin-block-end: 1.5rem;
+            }
+            
+            .partner-logos {
+                justify-content: flex-start;
+                gap: 0.75rem; /* Tighter gap on mobile */
+                row-gap: 1.5rem; /* More space between rows when wrapping */
+            }
+            
+            /* Mobile logo sizing */
+            .logo-cell {
+                flex: 0 0 auto;  /* Don't shrink to prevent unwanted wrapping */
+                width: clamp(4.62rem, 19.8vw, 6.05rem);  /* 25% larger total (was 2.5rem base) */
+                block-size: 3.125rem;                      /* 25% larger total (was 2.5rem) */
+            }
+            
+            .logo-cell img {
+                min-inline-size: 2.5rem;  /* 25% larger total (was 2rem) */
+                max-inline-size: 100%;    /* Ensure logos fill their containers */
+            }
+            
+            .form-container {
+                padding: 3rem 2.5rem;
+                border-radius: 16px;
+                max-width: 100%; /* Full width within parent */
+                width: 100%; /* Ensure it doesn't exceed parent */
+                margin: 2rem 0; /* No horizontal margins - handled by wrapper */
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+                background: rgba(254, 254, 254, 0.98);
+                backdrop-filter: blur(10px);
+                position: relative; /* Ensure it's above gradient */
+                z-index: 2;
+                pointer-events: auto; /* Ensure form is clickable */
+                box-sizing: border-box; /* Include padding in width calculation */
+            }
+            
+            .form-title {
+                font-size: 2.4rem;
+            }
+            
+            /* Keep two-column layout on mobile - removed the 1fr override */
+            
+            /* Adjust form inputs for mobile two-column layout */
+            .form-input,
+            .form-select,
+            .form-textarea {
+                font-size: 1.4rem; /* Slightly smaller for mobile */
+            }
+            
+            .form-label {
+                font-size: 1.4rem;
+                font-family: 'Suisse Screen', -apple-system, BlinkMacSystemFont, sans-serif;
+            }
+            
+            /* Ensure country display value matches other inputs on mobile */
+            .country-display-value {
+                font-size: 1.4rem !important;
+            }
+            
+            .form-row {
+                gap: 1.5rem; /* Tighter gap between columns */
+            }
+            
+            .form-footer {
+                flex-direction: row;
+                align-items: flex-start;
+                justify-content: space-between;
+                text-align: left;
+            }
+            
+            .form-privacy {
+                white-space: normal;
+                margin-right: 2rem;
+                margin-bottom: 0;
+                flex: 1;
+                font-size: 1.2rem;
+            }
+            
+            .form-footer .btn {
+                flex-shrink: 0;
+                min-width: 120px;
+            }
+        }
+        
+        /* Footer styling - restore original dark background */
+        footer {
+            background: #212529; /* Use color-gray-900 value */
+            position: relative;
+            margin-top: auto; /* Push footer to bottom */
+            z-index: 1; /* Ensure footer is above gradient */
+        }
+        
+        /* Remove the spectrum gradient border at top of footer */
+        footer::before {
+            display: none;
+        }
+        
+        /* Ensure header background works with gradient */
+        #site-header {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 1000; /* Ensure header is above gradient */
+        }
+        
+        .header-bg {
+            background: transparent;
+        }
+        
+        /* Ensure main content is above gradient */
+        .contact-hero {
+            position: relative;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <!-- Content wrapper with gradient -->
+    <div class="page-wrapper">
+    
+    <!-- ===== SITE HEADER ===== -->
+    <header id="site-header" class="">
+        <div class="header-bg"></div>
+        <div class="container">
+            <div class="header__in">
+                <nav class="main-navigation">
+                    <a href="index.html" aria-label="Contestra homepage" class="site-logo">
+                        <img src="images/logos/contestra-logo.svg" alt="Contestra">
+                    </a>
+                    <div class="main-menu-wrap">
+                        <ul class="main-menu" id="main-menu">
+                            <li><a href="pricing.html">Pricing</a></li>
+                        </ul>
+                    </div>
+                    <div class="header__options">
+                        <a href="talk.html" class="btn btn--primary-black btn-arrow">
+                            Let's Talk
+                            <svg class="btn-arrow-icon" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                                <polyline points="3 3 9 6 3 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+                    <button class="mobile-menu-btn" id="mobile-menu-btn" aria-controls="mobile-menu" aria-expanded="false" aria-label="Open menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Mobile Menu Dropdown - Full menu with Privacy, Terms, CTA - v2025.08.01.15:30 -->
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-menu-inner">
+            <!-- Menu Content -->
+            <div class="mobile-menu-content">
+                <!-- Navigation Section -->
+                <div class="mobile-menu-section">
+                    <h3 class="mobile-menu-section-title">Explore</h3>
+                    <ul class="mobile-menu-nav">
+                        <li>
+                            <a href="pricing.html">
+                                <span>Pricing</span>
+                                <svg viewBox="0 0 20 20" fill="none">
+                                    <path d="M10 7l5 5-5 5" stroke="currentColor"/>
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- CTA Section - Updated 2025-08-01 -->
+                <div class="mobile-menu-cta-section">
+                    <h2 class="mobile-menu-cta-title">Ready to control your brand's AI presence?</h2>
+                    <p class="mobile-menu-cta-subtitle">Schedule a personalized demo to see Contestra in action.</p>
+                    <a href="talk.html" class="btn btn--primary-black btn-arrow">
+                        Consult an AI Expert
+                        <svg class="btn-arrow-icon" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                            <polyline points="3 3 9 6 3 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"></polyline>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Menu Footer -->
+            <div class="mobile-menu-footer">
+                <div class="mobile-menu-socials">
+                    <a href="https://x.com/contestra_ai" target="_blank" rel="noopener">
+                        <img src="images/icons/x-logo-black.svg" alt="X (Twitter)">
+                    </a>
+                    <a href="https://www.linkedin.com/company/contestra/" target="_blank" rel="noopener">
+                        <img src="images/icons/linkedin-logo-black.svg" alt="LinkedIn">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== TWO-COLUMN HERO SECTION ===== -->
+    <section class="contact-hero">
+        <div class="contact-hero__wrapper">
+            <!-- Left column -->
+            <div class="contact-hero__left">
+                    <h1 class="contact-hero__title">Let's Talk Brand<br>Representation in AI</h1>
+                    <p class="contact-hero__subtitle">
+                        A non-sales conversation about controlling your brand's presence in AI interfaces like ChatGPT.
+                    </p>
+                    
+                    <!-- Value Propositions -->
+                    <div class="value-props">
+                        <div class="value-prop">
+                            <div class="value-prop__icon">
+                                <svg viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="value-prop__text">The four problems every health brand faces over the next 12 months.</div>
+                        </div>
+                        <div class="value-prop">
+                            <div class="value-prop__icon">
+                                <svg viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="value-prop__text">A more engineered approach to how your brand value is communicated.</div>
+                        </div>
+                        <div class="value-prop">
+                            <div class="value-prop__icon">
+                                <svg viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <div class="value-prop__text">How we deliver the strongest AI presence for the lowest investment.</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Trusted Partners - Updated 2025-08-01 with proper logo sizing -->
+                    <div class="trusted-partners">
+                        <p class="trusted-partners-title">Core technologies we build upon:</p>
+                        <div class="partner-logos">
+                            <div class="logo-cell"><img src="images/logos/pytorch-ai-boxed-logo.svg" alt="PyTorch"></div>
+                            <div class="logo-cell"><img src="images/logos/nltk-ai-boxed-logo.svg" alt="NLTK"></div>
+                            <div class="logo-cell"><img src="images/logos/tensorflow-ai-boxed-logo.svg" alt="TensorFlow"></div>
+                            <div class="logo-cell"><img src="images/logos/spacy-ai-boxed-logo.svg" alt="spaCy"></div>
+                            <div class="logo-cell"><img src="images/logos/gemma-ai-boxed-logo.svg" alt="Gemma"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Right column - gradient background only -->
+                <div class="contact-hero__right">
+                    <!-- Desktop form container -->
+                    <div class="desktop-form-wrapper">
+                    <div class="form-container" id="form-container-desktop">
+                    <h2 class="form-title">Request a free 30 minute chat</h2>
+                    
+                    <!-- Loading state -->
+                    <div class="form-loading">
+                        <div class="loading-spinner"></div>
+                        <div class="loading-text">Submitting your request...</div>
+                    </div>
+                    
+                    <!-- Success state -->
+                    <div class="form-success">
+                        <svg class="success-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                            <circle class="success-circle" cx="26" cy="26" r="25" fill="none"/>
+                            <path class="success-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                        <h3 class="success-title">Thank you!</h3>
+                        <p class="success-message">
+                            We will be back in touch within the next 24 hours to arrange a Zoom call. 
+                            In the meantime, feel free to contact us at 
+                            <a href="mailto:hi@contestra.com">hi@contestra.com</a> 
+                            if you have any questions.
+                        </p>
+                    </div>
+                    
+                    <!-- Error state -->
+                    <div class="form-error">
+                        <svg class="error-icon" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+                            <circle class="error-circle" cx="26" cy="26" r="25" fill="none"/>
+                            <path class="error-x" fill="none" d="M16,16 L36,36 M36,16 L16,36"/>
+                        </svg>
+                        <h3 class="error-title">Oops!</h3>
+                        <p class="error-message">
+                            An error occurred while submitting your form. 
+                            Please email us directly at 
+                            <a href="mailto:hi@contestra.com">hi@contestra.com</a> 
+                            and we'll get back to you within 24 hours.
+                        </p>
+                    </div>
+                    
+                    <form class="contact-form" id="contactForm">
+                        <div class="form-grid">
+                            <!-- Name Row -->
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input type="text" id="firstName" name="firstName" class="form-input" placeholder=" " required>
+                                    <label for="firstName" class="form-label">First name*</label>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" id="lastName" name="lastName" class="form-input" placeholder=" " required>
+                                    <label for="lastName" class="form-label">Last name*</label>
+                                </div>
+                            </div>
+                            
+                            <!-- Email Field -->
+                            <div class="form-group full-width">
+                                <input type="email" id="email" name="email" class="form-input" placeholder=" " required>
+                                <label for="email" class="form-label">Work email*</label>
+                                <div class="email-error-message" id="email-error-message"></div>
+                            </div>
+                            
+                            <!-- Phone and Company Row -->
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input type="tel" id="phone" name="phone" class="form-input" placeholder=" ">
+                                    <label for="phone" class="form-label">Phone number</label>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" id="company" name="company" class="form-input" placeholder=" " required>
+                                    <label for="company" class="form-label">Company name*</label>
+                                </div>
+                            </div>
+                            
+                            <!-- Job Title and Country Row -->
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input type="text" id="jobTitle" name="jobTitle" class="form-input" placeholder=" " required>
+                                    <label for="jobTitle" class="form-label">Job title*</label>
+                                </div>
+                                <div class="form-group">
+                                    <select id="country" name="country" class="form-select">
+                                        <option value=""></option>
+                                        <option value="US">United States</option>
+                                        <option value="GB">United Kingdom</option>
+                                        <option value="CA">Canada</option>
+                                        <option value="DE">Germany</option>
+                                        <option value="FR">France</option>
+                                        <option value="" disabled>──────────</option>
+                                        <option value="AU">Australia</option>
+                                        <option value="AT">Austria</option>
+                                        <option value="BE">Belgium</option>
+                                        <option value="BR">Brazil</option>
+                                        <option value="CN">China</option>
+                                        <option value="DK">Denmark</option>
+                                        <option value="FI">Finland</option>
+                                        <option value="IN">India</option>
+                                        <option value="IE">Ireland</option>
+                                        <option value="IL">Israel</option>
+                                        <option value="IT">Italy</option>
+                                        <option value="JP">Japan</option>
+                                        <option value="MX">Mexico</option>
+                                        <option value="NL">Netherlands</option>
+                                        <option value="NZ">New Zealand</option>
+                                        <option value="NO">Norway</option>
+                                        <option value="PL">Poland</option>
+                                        <option value="PT">Portugal</option>
+                                        <option value="SG">Singapore</option>
+                                        <option value="KR">South Korea</option>
+                                        <option value="ES">Spain</option>
+                                        <option value="SE">Sweden</option>
+                                        <option value="CH">Switzerland</option>
+                                        <option value="AE">United Arab Emirates</option>
+                                        <option value="OTHER">Other</option>
+                                    </select>
+                                    <label for="country" class="form-label">Country</label>
+                                </div>
+                            </div>
+                            
+                            <!-- How can we help -->
+                            <div class="form-group full-width">
+                                <textarea id="message" name="message" class="form-textarea" rows="3" placeholder=" "></textarea>
+                                <label for="message" class="form-label">How can our team help you?</label>
+                            </div>
+                            
+                            <!-- Footer with Privacy and Submit -->
+                            <div class="form-footer">
+                                <p class="form-privacy">
+                                    I acknowledge and accept the terms of the <a href="privacy.html">privacy policy</a>.
+                                </p>
+                                <button type="submit" class="btn btn--primary-black btn-arrow">
+                                    Submit
+                                    <svg class="btn-arrow-icon" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                                        <polyline points="3 3 9 6 3 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"></polyline>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                    </div><!-- End desktop-form-wrapper -->
+                </div>
+                
+                <!-- Mobile form section - appears after left content on mobile -->
+                <!-- 
+                    FORM DUPLICATION NOTICE:
+                    ======================
+                    This form is intentionally duplicated for desktop/mobile to support:
+                    1. Different positioning (desktop: right column, mobile: below content)
+                    2. Different gradient bar implementations
+                    3. Separate form IDs for analytics tracking
+                    4. Mobile-specific styling (1.4rem fonts, tighter spacing)
+                    
+                    MAINTENANCE: When updating form fields, update BOTH forms.
+                    TODO: Consider refactoring to a single form with CSS-only responsive positioning.
+                -->
+                <div class="mobile-form-section">
+                    <div class="form-container" id="form-container-mobile">
+                    <h2 class="form-title">Request a free 30 minute chat</h2>
+                    
+                    <!-- Loading state -->
+                    <div class="form-loading">
+                        <div class="loading-spinner"></div>
+                        <div class="loading-text">Submitting your request...</div>
+                    </div>
+                    
+                    <!-- Success state -->
+                    <div class="form-success">
+                        <svg class="success-checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                            <circle class="success-circle" cx="26" cy="26" r="25" fill="none"/>
+                            <path class="success-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                        <h3 class="success-title">Thank you!</h3>
+                        <p class="success-message">
+                            We will be back in touch within the next 24 hours to arrange a Zoom call. 
+                            In the meantime, feel free to contact us at 
+                            <a href="mailto:hi@contestra.com">hi@contestra.com</a> 
+                            if you have any questions.
+                        </p>
+                    </div>
+                    
+                    <!-- Error state -->
+                    <div class="form-error">
+                        <svg class="error-icon" viewBox="0 0 52 52" xmlns="http://www.w3.org/2000/svg">
+                            <circle class="error-circle" cx="26" cy="26" r="25" fill="none"/>
+                            <path class="error-x" fill="none" d="M16,16 L36,36 M36,16 L16,36"/>
+                        </svg>
+                        <h3 class="error-title">Oops!</h3>
+                        <p class="error-message">
+                            An error occurred while submitting your form. 
+                            Please email us directly at 
+                            <a href="mailto:hi@contestra.com">hi@contestra.com</a> 
+                            and we'll get back to you within 24 hours.
+                        </p>
+                    </div>
+                    
+                    <form class="contact-form" id="contactForm-mobile">
+                        <div class="form-grid">
+                            <!-- Name Row -->
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input type="text" id="firstName-mobile" name="firstName" class="form-input" placeholder=" " required>
+                                    <label for="firstName-mobile" class="form-label">First name*</label>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" id="lastName-mobile" name="lastName" class="form-input" placeholder=" " required>
+                                    <label for="lastName-mobile" class="form-label">Last name*</label>
+                                </div>
+                            </div>
+                            
+                            <!-- Email Field -->
+                            <div class="form-group full-width">
+                                <input type="email" id="email-mobile" name="email" class="form-input" placeholder=" " required>
+                                <label for="email-mobile" class="form-label">Work email*</label>
+                                <div class="email-error-message" id="email-error-message-mobile"></div>
+                            </div>
+                            
+                            <!-- Phone and Company Row -->
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input type="tel" id="phone-mobile" name="phone" class="form-input" placeholder=" ">
+                                    <label for="phone-mobile" class="form-label">Phone number</label>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" id="company-mobile" name="company" class="form-input" placeholder=" " required>
+                                    <label for="company-mobile" class="form-label">Company name*</label>
+                                </div>
+                            </div>
+                            
+                            <!-- Job Title and Country Row -->
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input type="text" id="jobTitle-mobile" name="jobTitle" class="form-input" placeholder=" " required>
+                                    <label for="jobTitle-mobile" class="form-label">Job title*</label>
+                                </div>
+                                <div class="form-group">
+                                    <select id="country-mobile" name="country" class="form-select">
+                                        <option value=""></option>
+                                        <option value="US">United States</option>
+                                        <option value="GB">United Kingdom</option>
+                                        <option value="CA">Canada</option>
+                                        <option value="DE">Germany</option>
+                                        <option value="FR">France</option>
+                                        <option value="" disabled>──────────</option>
+                                        <option value="AU">Australia</option>
+                                        <option value="AT">Austria</option>
+                                        <option value="BE">Belgium</option>
+                                        <option value="BR">Brazil</option>
+                                        <option value="CN">China</option>
+                                        <option value="DK">Denmark</option>
+                                        <option value="FI">Finland</option>
+                                        <option value="IN">India</option>
+                                        <option value="IE">Ireland</option>
+                                        <option value="IL">Israel</option>
+                                        <option value="IT">Italy</option>
+                                        <option value="JP">Japan</option>
+                                        <option value="MX">Mexico</option>
+                                        <option value="NL">Netherlands</option>
+                                        <option value="NZ">New Zealand</option>
+                                        <option value="NO">Norway</option>
+                                        <option value="PL">Poland</option>
+                                        <option value="PT">Portugal</option>
+                                        <option value="SG">Singapore</option>
+                                        <option value="KR">South Korea</option>
+                                        <option value="ES">Spain</option>
+                                        <option value="SE">Sweden</option>
+                                        <option value="CH">Switzerland</option>
+                                        <option value="AE">United Arab Emirates</option>
+                                        <option value="OTHER">Other</option>
+                                    </select>
+                                    <label for="country-mobile" class="form-label">Country</label>
+                                </div>
+                            </div>
+                            
+                            <!-- How can we help -->
+                            <div class="form-group full-width">
+                                <textarea id="message-mobile" name="message" class="form-textarea" rows="3" placeholder=" "></textarea>
+                                <label for="message-mobile" class="form-label">How can our team help you?</label>
+                            </div>
+                            
+                            <!-- Footer with Privacy and Submit -->
+                            <div class="form-footer">
+                                <p class="form-privacy">
+                                    I acknowledge and accept the terms of the <a href="privacy.html">privacy policy</a>.
+                                </p>
+                                <button type="submit" class="btn btn--primary-black btn-arrow">
+                                    Submit
+                                    <svg class="btn-arrow-icon" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                                        <polyline points="3 3 9 6 3 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"></polyline>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+        </div>
+    </section>
+    </div><!-- End page-wrapper -->
+
+    <!-- ===== FOOTER ===== -->
+    <footer>
+        <div class="container">
+            <p class="footer-copyright">© 2025 Contestra. All Rights Reserved.</p>
+
+            <div class="footer-system-status">
+                <span class="status-indicator"></span><span class="status-text">All systems normal</span>
+            </div>
+
+            <div class="footer-socials">
+                <a href="https://x.com/contestra_ai" target="_blank" rel="noopener"><img src="images/icons/x-logo-black.svg" alt="X (Twitter)"></a>
+                <a href="https://www.linkedin.com/company/contestra/" target="_blank" rel="noopener"><img src="images/icons/linkedin-logo-black.svg" alt="LinkedIn"></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== JAVASCRIPT FILES ===== -->
+    <script src="js/utilities.js"></script>
+    <script src="js/navigation.js"></script>
+    
+    <!-- Mobile menu now handled by navigation.js -->
+    
+    <!-- Contact Form Handler -->
+    <script>
+        // Custom searchable dropdown functionality - handle both desktop and mobile
+        function setupCountryDropdown(selectId, isMobile = false) {
+        const countrySelect = document.getElementById(selectId);
+        const countryGroup = countrySelect.closest('.form-group');
+        
+        // Create custom dropdown with ARIA attributes
+        const customDropdown = document.createElement('div');
+        customDropdown.className = 'custom-dropdown';
+        customDropdown.id = `${selectId}-listbox`;
+        customDropdown.setAttribute('role', 'listbox');
+        customDropdown.setAttribute('aria-label', 'Country selection');
+        customDropdown.style.cssText = `
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #d1d5db;
+            border-top: none;
+            max-height: 260px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        `;
+        
+        // Create search input with ARIA attributes
+        const searchInput = document.createElement('input');
+        searchInput.type = 'text';
+        searchInput.id = `${selectId}-search`;
+        searchInput.placeholder = 'Search countries...';
+        searchInput.setAttribute('role', 'combobox');
+        searchInput.setAttribute('aria-expanded', 'false');
+        searchInput.setAttribute('aria-controls', customDropdown.id);
+        searchInput.setAttribute('aria-autocomplete', 'list');
+        searchInput.setAttribute('aria-label', 'Search countries');
+        searchInput.style.cssText = `
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: none;
+            border-bottom: 1px solid #d1d5db;
+            font-size: 1.4rem;
+            outline: none;
+        `;
+        
+        // Create options container
+        const optionsContainer = document.createElement('div');
+        optionsContainer.style.cssText = 'padding: 0.5rem 0;';
+        
+        // Get all options from select
+        const options = Array.from(countrySelect.options).filter(opt => opt.value && !opt.disabled);
+        
+        // Create option elements with ARIA
+        let currentFocusIndex = -1;
+        options.forEach((opt, index) => {
+            const optionDiv = document.createElement('div');
+            optionDiv.textContent = opt.textContent;
+            optionDiv.dataset.value = opt.value;
+            optionDiv.dataset.index = index;
+            optionDiv.id = `${selectId}-option-${index}`;
+            optionDiv.setAttribute('role', 'option');
+            optionDiv.setAttribute('aria-selected', 'false');
+            optionDiv.style.cssText = `
+                padding: 0.8rem 1rem;
+                cursor: pointer;
+                font-size: 1.4rem;
+                transition: background 0.2s;
+            `;
+            optionDiv.addEventListener('mouseover', () => {
+                optionDiv.style.background = '#f3f4f6';
+            });
+            optionDiv.addEventListener('mouseout', () => {
+                optionDiv.style.background = 'white';
+            });
+            optionDiv.addEventListener('click', () => {
+                countrySelect.value = opt.value;
+                countrySelect.dispatchEvent(new Event('change'));
+                customDropdown.style.display = 'none';
+                updateDisplayValue();
+                // Add has-value class when country is selected
+                if (opt.value) {
+                    countrySelect.classList.add('has-value');
+                    countryGroup.classList.add('has-value'); // Add to form-group for better browser support
+                    // Add success state to country field
+                    countrySelect.classList.add('input-success');
+                    clickArea.style.borderBottomColor = '#2D8A2D';
+                    // Force label to hide
+                    const label = countryGroup.querySelector('.form-label');
+                    if (label) {
+                        label.style.opacity = '0';
+                        label.style.transform = 'translateY(-1.5rem) scale(0.75)';
+                    }
+                }
+            });
+            optionsContainer.appendChild(optionDiv);
+        });
+        
+        customDropdown.appendChild(searchInput);
+        customDropdown.appendChild(optionsContainer);
+        countryGroup.style.position = 'relative';
+        countryGroup.appendChild(customDropdown);
+        
+        // Create display value div
+        const displayValue = document.createElement('div');
+        displayValue.className = 'country-display-value';
+        displayValue.style.cssText = `
+            position: absolute;
+            left: 0;
+            top: 0.4rem;
+            right: 2rem;
+            pointer-events: none;
+            font-size: ${isMobile ? '1.4rem' : '1.6rem'};
+            font-family: 'Suisse Screen', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-weight: 400;
+            color: #111827;
+        `;
+        countryGroup.appendChild(displayValue);
+        
+        // Update display value
+        function updateDisplayValue() {
+            const selected = countrySelect.options[countrySelect.selectedIndex];
+            displayValue.textContent = selected && selected.value ? selected.textContent : '';
+            // Ensure display value is visible when country is selected
+            if (selected && selected.value) {
+                displayValue.style.opacity = '1';
+            }
+        }
+        
+        // Hide actual select but keep it functional
+        countrySelect.style.opacity = '0';
+        countrySelect.style.position = 'absolute';
+        countrySelect.style.pointerEvents = 'none';
+        countrySelect.style.zIndex = '1';
+        
+        // Create clickable area
+        const clickArea = document.createElement('div');
+        clickArea.style.cssText = `
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: calc(100% - 1px);
+            cursor: pointer;
+            border-bottom: 1px solid #d1d5db;
+        `;
+        countryGroup.appendChild(clickArea);
+        
+        // Add hover effect only when dropdown is closed
+        clickArea.addEventListener('mouseenter', () => {
+            if (customDropdown.style.display === 'none' && !countrySelect.classList.contains('has-value')) {
+                clickArea.style.borderBottomColor = 'var(--color-accent)';
+            }
+        });
+        clickArea.addEventListener('mouseleave', () => {
+            if (customDropdown.style.display === 'none' && !countrySelect.classList.contains('has-value')) {
+                clickArea.style.borderBottomColor = '#d1d5db';
+            }
+        });
+        
+        // Toggle dropdown
+        clickArea.addEventListener('click', (e) => {
+            e.stopPropagation();
+            customDropdown.style.display = customDropdown.style.display === 'none' ? 'block' : 'none';
+            if (customDropdown.style.display === 'block') {
+                searchInput.setAttribute('aria-expanded', 'true');
+                searchInput.focus();
+                searchInput.value = '';
+                filterOptions('');
+                clickArea.style.borderBottomColor = 'var(--color-accent)';
+                countryGroup.classList.add('focused');
+                currentFocusIndex = -1; // Reset focus index
+            } else {
+                searchInput.setAttribute('aria-expanded', 'false');
+                // Keep green if a country is selected
+                if (countrySelect.classList.contains('has-value')) {
+                    clickArea.style.borderBottomColor = '#2D8A2D';
+                } else {
+                    clickArea.style.borderBottomColor = '#d1d5db';
+                }
+                countryGroup.classList.remove('focused');
+            }
+        });
+        
+        // Search functionality
+        searchInput.addEventListener('input', (e) => {
+            filterOptions(e.target.value.toLowerCase());
+        });
+        
+        // Keyboard navigation
+        searchInput.addEventListener('keydown', (e) => {
+            const visibleOptions = Array.from(optionsContainer.querySelectorAll('div[role="option"]'))
+                .filter(opt => opt.style.display !== 'none');
+            
+            switch(e.key) {
+                case 'ArrowDown':
+                    e.preventDefault();
+                    currentFocusIndex = Math.min(currentFocusIndex + 1, visibleOptions.length - 1);
+                    updateFocus(visibleOptions, currentFocusIndex);
+                    break;
+                    
+                case 'ArrowUp':
+                    e.preventDefault();
+                    currentFocusIndex = Math.max(currentFocusIndex - 1, -1);
+                    updateFocus(visibleOptions, currentFocusIndex);
+                    break;
+                    
+                case 'Enter':
+                    e.preventDefault();
+                    if (currentFocusIndex >= 0 && visibleOptions[currentFocusIndex]) {
+                        visibleOptions[currentFocusIndex].click();
+                    }
+                    break;
+                    
+                case 'Escape':
+                    e.preventDefault();
+                    customDropdown.style.display = 'none';
+                    searchInput.setAttribute('aria-expanded', 'false');
+                    clickArea.focus();
+                    break;
+            }
+        });
+        
+        // Update focus and ARIA attributes
+        function updateFocus(visibleOptions, index) {
+            visibleOptions.forEach((opt, i) => {
+                if (i === index) {
+                    opt.style.background = '#f3f4f6';
+                    opt.setAttribute('aria-selected', 'true');
+                    searchInput.setAttribute('aria-activedescendant', opt.id);
+                } else {
+                    opt.style.background = 'white';
+                    opt.setAttribute('aria-selected', 'false');
+                }
+            });
+        }
+        
+        function filterOptions(searchTerm) {
+            const allOptions = optionsContainer.querySelectorAll('div');
+            allOptions.forEach(opt => {
+                const text = opt.textContent.toLowerCase();
+                opt.style.display = text.includes(searchTerm) ? 'block' : 'none';
+            });
+        }
+        
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!countryGroup.contains(e.target)) {
+                customDropdown.style.display = 'none';
+                // Keep green if a country is selected
+                if (countrySelect.classList.contains('has-value')) {
+                    clickArea.style.borderBottomColor = '#2D8A2D';
+                } else {
+                    clickArea.style.borderBottomColor = '#d1d5db';
+                }
+                countryGroup.classList.remove('focused');
+            }
+        });
+        
+        // Prevent search input from closing dropdown
+        searchInput.addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
+        }
+        
+        // Setup dropdowns for both forms
+        setupCountryDropdown('country', false);
+        setupCountryDropdown('country-mobile', true);
+        
+        // Personal email domains list
+        const personalEmailDomains = [
+            'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'aol.com',
+            'icloud.com', 'mail.com', 'protonmail.com', 'zoho.com', 'yandex.com',
+            'gmx.com', 'live.com', 'msn.com', 'googlemail.com', 'me.com'
+        ];
+        
+        // Email validation function
+        function validateEmail(formId = '') {
+            const emailInput = document.getElementById('email' + (formId ? '-' + formId : ''));
+            const errorMessage = document.getElementById('email-error-message' + (formId ? '-' + formId : ''));
+            const email = emailInput.value.trim();
+            const emailDomain = email.substring(email.lastIndexOf('@') + 1).toLowerCase();
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            
+            emailInput.classList.remove('input-error', 'input-success');
+            
+            if (email === '') {
+                emailInput.classList.add('input-error');
+                errorMessage.textContent = 'Please complete this required field.';
+                return false;
+            }
+            
+            if (!emailRegex.test(email)) {
+                emailInput.classList.add('input-error');
+                errorMessage.textContent = 'Please enter a valid email format.';
+                return false;
+            }
+            
+            if (personalEmailDomains.includes(emailDomain)) {
+                emailInput.classList.add('input-error');
+                errorMessage.textContent = 'Please use a business email address.';
+                return false;
+            }
+            
+            emailInput.classList.add('input-success');
+            errorMessage.textContent = '';
+            return true;
+        }
+        
+        // Add blur event to validate email as user types
+        document.getElementById('email').addEventListener('blur', () => validateEmail());
+        document.getElementById('email-mobile').addEventListener('blur', () => validateEmail('mobile'));
+        
+        // Add blur event to all other form inputs to show success state
+        const formInputs = document.querySelectorAll('.form-input:not(#email), .form-textarea');
+        formInputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                const value = this.value.trim();
+                
+                // Special validation for first and last name
+                if (this.id === 'firstName' || this.id === 'lastName') {
+                    if (value.length >= 2) {
+                        this.classList.remove('input-error');
+                        this.classList.add('input-success');
+                    } else {
+                        this.classList.remove('input-success');
+                        this.classList.add('input-error');
+                    }
+                } else {
+                    // Standard validation for other fields
+                    if (value !== '') {
+                        this.classList.remove('input-error');
+                        this.classList.add('input-success');
+                    } else if (this.hasAttribute('required')) {
+                        this.classList.remove('input-success');
+                        this.classList.add('input-error');
+                    } else {
+                        this.classList.remove('input-error', 'input-success');
+                    }
+                }
+            });
+        });
+        
+        // Form submission handler function
+        async function handleFormSubmit(e, formType = '') {
+            e.preventDefault();
+            
+            // Validate email before submission
+            if (!validateEmail(formType)) {
+                document.getElementById('email' + (formType ? '-' + formType : '')).focus();
+                return;
+            }
+            
+            // Validate first and last name length
+            const firstName = document.getElementById('firstName' + (formType ? '-' + formType : ''));
+            const lastName = document.getElementById('lastName' + (formType ? '-' + formType : ''));
+            
+            if (firstName.value.trim().length < 2) {
+                firstName.classList.remove('input-success');
+                firstName.classList.add('input-error');
+                firstName.focus();
+                return;
+            }
+            
+            if (lastName.value.trim().length < 2) {
+                lastName.classList.remove('input-success');
+                lastName.classList.add('input-error');
+                lastName.focus();
+                return;
+            }
+            
+            // Collect form data
+            const form = e.target;
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData);
+            
+            // Get the form container
+            const formContainer = document.getElementById('form-container-' + (formType || 'desktop'));
+            
+            // Show loading state
+            formContainer.classList.add('is-loading');
+            
+            // Submit to Google Sheets via Google Apps Script Web App
+            // You'll need to replace this URL with your own Google Apps Script URL
+            const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwAyPs8KXfN_lMqt1ytRZK9g4W_1qX8qSacQkA-KZq1-w924L7Xlyo580qD_jgUWewA/exec';
+            
+            try {
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors', // Google Apps Script requires no-cors
+                    headers: {
+                        'Content-Type': 'text/plain', // Change to text/plain for no-cors
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                // With no-cors, we can't read the response, so we assume success
+                // The Google Apps Script will send an email if it fails
+                
+                // Simulate a small delay to show the loading state
+                await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                // Show success state
+                formContainer.classList.remove('is-loading');
+                formContainer.classList.add('is-success');
+                
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                // Remove loading state and show error animation
+                formContainer.classList.remove('is-loading');
+                formContainer.classList.add('is-error');
+            }
+            
+            // Don't reset form when showing success state
+            return;
+            
+            /* Old reset code - kept for reference
+            // Reset form
+            form.reset();
+            
+            // Reset country dropdowns
+            const countryDesktop = document.getElementById('country');
+            const countryMobile = document.getElementById('country-mobile');
+            if (countryDesktop) {
+                countryDesktop.classList.remove('has-value', 'input-success');
+                countryDesktop.closest('.form-group').classList.remove('has-value');
+                const displayValueDesktop = countryDesktop.parentElement.querySelector('div[style*="pointer-events: none"]');
+                if (displayValueDesktop) displayValueDesktop.textContent = '';
+                // Reset label visibility
+                const labelDesktop = countryDesktop.closest('.form-group').querySelector('.form-label');
+                if (labelDesktop) {
+                    labelDesktop.style.opacity = '';
+                    labelDesktop.style.transform = '';
+                }
+            }
+            if (countryMobile) {
+                countryMobile.classList.remove('has-value', 'input-success');
+                countryMobile.closest('.form-group').classList.remove('has-value');
+                const displayValueMobile = countryMobile.parentElement.querySelector('div[style*="pointer-events: none"]');
+                if (displayValueMobile) displayValueMobile.textContent = '';
+                // Reset label visibility
+                const labelMobile = countryMobile.closest('.form-group').querySelector('.form-label');
+                if (labelMobile) {
+                    labelMobile.style.opacity = '';
+                    labelMobile.style.transform = '';
+                }
+            }
+            
+            // Clear all validation states
+            document.querySelectorAll('.form-input, .form-textarea').forEach(input => {
+                input.classList.remove('input-error', 'input-success');
+            });
+            document.getElementById('email-error-message' + (formType ? '-' + formType : '')).textContent = '';
+            
+            // Reset click areas for country dropdowns
+            document.querySelectorAll('[style*="border-bottom: 1px solid"]').forEach(clickArea => {
+                if (clickArea.style.borderBottomColor) {
+                    clickArea.style.borderBottomColor = '#d1d5db';
+                }
+            });
+            */
+        }
+        
+        // Add event listeners for both forms
+        document.getElementById('contactForm').addEventListener('submit', (e) => handleFormSubmit(e, ''));
+        document.getElementById('contactForm-mobile').addEventListener('submit', (e) => handleFormSubmit(e, 'mobile'));
+    </script>
+</body>
+</html>
